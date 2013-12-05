@@ -7,7 +7,7 @@ module Easing
 	# d = Duration total (frames)
 	# Returns: Value modified by t
 	def self.linear(t, b, c, d)
-		return c*t/d + b
+		return c*t/d.to_f + b
 	end
 end
 
