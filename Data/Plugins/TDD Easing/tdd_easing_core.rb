@@ -14,6 +14,11 @@ end
 module Ease
 	@@easings = []
 
+	# Available opts:
+	# 	:easing => Easing method, use Easing::METHOD (default is Easing::LINEAR)
+	#   :observers => Array of observer classes. Must respond to the following methods:
+	# 		ease_update(ease_obj)
+	# 		ease_complete(ease_obj)
 	def self.to(object, frames, attributes={}, opts={})
 		register_ease(:to, object, frames, attributes, opts)
 	end
@@ -24,11 +29,6 @@ module Ease
 
 	def self.update
 		@@easings.each_with_index do |ease, index|
-			if ease[:frame] == ease[:frames]
-				@@easings.delete_at(index)
-				ease[:on_complete] if ease[:on_complete]
-			end
-
 			object = ease[:object]
 			ease[:attributes].each_pair do |attribute, value|
 				attribute_origin = ease[:attribute_origins][attribute]
@@ -41,10 +41,15 @@ module Ease
 					to = attribute_origin
 				end
 				object[attribute] = Easing.send(ease[:easing], ease[:frame], from, to - from, ease[:frames])
-				puts "#{attribute}: #{object[attribute]}"
 			end
 
 			ease[:frame] += 1
+			if ease[:frame] > ease[:frames]
+				@@easings.delete_at(index)
+				ease[:observers].each{|o| o.send(:ease_complete, ease)}
+			else
+				ease[:observers].each{|o| o.send(:ease_update, ease)}
+			end
 		end
 	end
 
@@ -65,10 +70,10 @@ module Ease
 			:frames => frames,
 			# Default options from opts follow
 			:easing => Easing::LINEAR,
-			:on_progress => nil,
-			:on_complete => nil
+			:observers => []
 		}.merge(opts)
 
 		@@easings << ease
 	end
+
 end
