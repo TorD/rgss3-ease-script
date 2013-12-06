@@ -7,15 +7,7 @@ class Game_Picture
 		zoom_x
 		zoom_y
 		opacity
-		blend_type
 		duration)
-	
-	attr_accessor		:easing_obj
-
-	alias_method :easing_game_picture_initialize_extension, :initialize
-	def initialize(number)
-		easing_game_picture_initialize_extension(number)
-	end
 
 	# Aliased
 	alias_method :easing_game_picture_move_extension, :move
@@ -53,7 +45,7 @@ class Game_Picture
 	def update_move(ease_obj)
 		easing_target = ease_obj[:target]
 		@@easing_attributes.each do |attr|
-			self.instance_variable_set("@#{attr}", easing_target[attr])
+			instance_variable_set("@#{attr}", easing_target[attr])
 		end
 	end
 
