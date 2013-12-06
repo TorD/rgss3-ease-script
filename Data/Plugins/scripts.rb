@@ -1,16 +1,3 @@
-module Easing
-	LINEAR 			= "linear"
-
-	# t = Current time (frame)
-	# b = Start value
-	# c = Desired change in value
-	# d = Duration total (frames)
-	# Returns: Value modified by t
-	def self.linear(t, b, c, d)
-		return c*t/d.to_f + b
-	end
-end
-
 module Ease
 	@@easings = []
 
@@ -19,19 +6,19 @@ module Ease
 	#   :observers => Array of observer classes. Must respond to the following methods:
 	# 		ease_update(ease_obj)
 	# 		ease_complete(ease_obj)
-	def self.to(object, frames, attributes={}, opts={})
-		register_ease(:to, object, frames, attributes, opts)
+	def self.to(target, frames, attributes={}, opts={})
+		register_ease(:to, target, frames, attributes, opts)
 	end
 
-	def self.from(object, frames, attributes={}, opts={})
-		register_ease(:from, object, frames, attributes, opts)
+	def self.from(target, frames, attributes={}, opts={})
+		register_ease(:from, target, frames, attributes, opts)
 	end
 
 	def self.update
 		@@easings.each_with_index do |ease, index|
-			object = ease[:object]
+			target = ease[:target]
 			ease[:attributes].each_pair do |attribute, value|
-				attribute_origin = ease[:attribute_origins][attribute]
+				attribute_origin = ease[:attributes_origin][attribute]
 				case ease[:method]
 				when :to
 					from = attribute_origin
@@ -40,7 +27,7 @@ module Ease
 					from = value
 					to = attribute_origin
 				end
-				object[attribute] = Easing.send(ease[:easing], ease[:frame], from, to - from, ease[:frames])
+				target[attribute] = Easing.send(ease[:easing], ease[:frame], from, to - from, ease[:frames])
 			end
 
 			ease[:frame] += 1
@@ -54,17 +41,23 @@ module Ease
 	end
 
 	private
-	def self.register_ease(method, object, frames, attributes, opts)
+	def self.register_ease(method, target, frames, attributes, opts)
 
-		attribute_origins = {}
-		attributes.each_pair do |attribute, value|
-			attribute_origins[attribute] = object[attribute]
+		attributes_origin = {}
+		attributes.each_pair do |attr, value|
+			case method
+			when :to
+				attributes_origin[attr] = target[attr]
+			when :from
+				attributes_origin[attr] = value
+				attributes[attr] = target[attr]
+			end
 		end
 
-		ease = {
-			:object => object,
+		ease_obj = {
+			:target => target,
 			:attributes => attributes,
-			:attribute_origins => attribute_origins,
+			:attributes_origin => attributes_origin,
 			:method => method,
 			:frame => 0,
 			:frames => frames,
@@ -73,95 +66,12 @@ module Ease
 			:observers => []
 		}.merge(opts)
 
-		@@easings << ease
+		@@easings << ease_obj
 	end
 
 end
-class Scene_Base
-	alias_method :tdd_easing_scene_update_basic_extension, :update_basic
-	def update_basic
-		update_easing
-		tdd_easing_scene_update_basic_extension
-	end
+class Ease_Object
 
-	# New method; updates active easing each frame
-	def update_easing
-		Ease.update
-	end
-end
-class Game_Picture
-	@@easing_method = Easing::LINEAR
-	@@easing_method_temp = @@easing_method
-	@@easing_attributes = %w(
-		x
-		y
-		zoom_x
-		zoom_y
-		opacity
-		blend_type
-		duration)
-	
-	attr_accessor		:easing_obj
-
-	alias_method :easing_game_picture_initialize_extension, :initialize
-	def initialize(number)
-		easing_game_picture_initialize_extension(number)
-		@easing_obj = {}
-	end
-
-	# Aliased
-	alias_method :easing_game_picture_move_extension, :move
-	def move(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration)
-    easing_game_picture_move_extension(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration)
-
-    attributes = {}
-    @@easing_attributes.each do |attr|
-    	@easing_obj[attr] = instance_variable_get("@#{attr}")
-    	attributes[attr] = eval(attr)
-    end
-
-		Ease.to(@easing_obj, duration, attributes, {
-			:easing => easing_method,
-			:observers => [self]})
-  end
-
-  def ease_update(ease_obj)
-  	update_move(ease_obj)
-  end
-
-  def ease_complete(ease_obj)
-  	update_move(ease_obj)
-  end
-
-  # Overwrite (should be empty; all methods should use easing)
-  def update
-  	return
-  	#update_tone_change
-  	#update_rotate
-  end
-
-  # Overwrite
-	def update_move(ease_obj)
-		@@easing_attributes.each do |attr|
-			self.instance_variable_set("@#{attr}", @easing_obj[attr])
-		end
-	end
-
-	# Static method
-	def self.easing=(easing_method)
-		@@easing_method_temp = easing_method
-	end
-
-	def self.easing_default=(easing_method)
-		@@easing_method = easing_method
-	end
-
-	private
-	def easing_method
-		e = @@easing_method_temp
-		@@easing_method_temp = @@easing_method
-		e
-	end
 end
 module Easing
 	BOUNCE_IN			= "bounce_in"
@@ -275,6 +185,18 @@ end
 
 
 module Easing
+	LINEAR 			= "linear"
+
+	# t = Current time (frame)
+	# b = Start value
+	# c = Desired change in value
+	# d = Duration total (frames)
+	# Returns: Value modified by t
+	def self.linear(t, b, c, d)
+		return c*t/d.to_f + b
+	end
+end
+module Easing
 	QUAD_IN				= "quad_ease_in"
 	QUAD_OUT			= "quad_ease_out"
 	QUAD_IN_OUT 	= "quad_ease_in_out"
@@ -294,5 +216,92 @@ module Easing
 		return c/2*t*t + b if t < 1
 		t -= 1
 		return -c/2 * (t*(t-2) - 1) + b
+	end
+end
+class Scene_Base
+	alias_method :tdd_easing_scene_update_basic_extension, :update_basic
+	def update_basic
+		update_easing
+		tdd_easing_scene_update_basic_extension
+	end
+
+	# New method; updates active easing each frame
+	def update_easing
+		Ease.update
+	end
+end
+class Game_Picture
+	@@easing_method = Easing::LINEAR
+	@@easing_method_temp = @@easing_method
+	@@easing_attributes = %w(
+		x
+		y
+		zoom_x
+		zoom_y
+		opacity
+		blend_type
+		duration)
+	
+	attr_accessor		:easing_obj
+
+	alias_method :easing_game_picture_initialize_extension, :initialize
+	def initialize(number)
+		easing_game_picture_initialize_extension(number)
+	end
+
+	# Aliased
+	alias_method :easing_game_picture_move_extension, :move
+	def move(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration)
+    easing_game_picture_move_extension(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration)
+
+    attributes = {}
+    easing_target = {}
+    @@easing_attributes.each do |attr|
+    	easing_target[attr] = instance_variable_get("@#{attr}")
+    	attributes[attr] = eval(attr)
+    end
+
+		Ease.to(easing_target, duration, attributes, {
+			:easing => easing_method,
+			:observers => [self]})
+  end
+
+  def ease_update(ease_obj)
+  	update_move(ease_obj)
+  end
+
+  def ease_complete(ease_obj)
+  	update_move(ease_obj)
+  end
+
+  # Overwrite (should be empty; all methods should use easing)
+  def update
+  	return
+  	#update_tone_change
+  	#update_rotate
+  end
+
+  # Overwrite
+	def update_move(ease_obj)
+		easing_target = ease_obj[:target]
+		@@easing_attributes.each do |attr|
+			self.instance_variable_set("@#{attr}", easing_target[attr])
+		end
+	end
+
+	# Static method
+	def self.easing=(easing_method)
+		@@easing_method_temp = easing_method
+	end
+
+	def self.easing_default=(easing_method)
+		@@easing_method = easing_method
+	end
+
+	private
+	def easing_method
+		e = @@easing_method_temp
+		@@easing_method_temp = @@easing_method
+		e
 	end
 end

@@ -15,7 +15,6 @@ class Game_Picture
 	alias_method :easing_game_picture_initialize_extension, :initialize
 	def initialize(number)
 		easing_game_picture_initialize_extension(number)
-		@easing_obj = {}
 	end
 
 	# Aliased
@@ -24,12 +23,13 @@ class Game_Picture
     easing_game_picture_move_extension(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration)
 
     attributes = {}
+    easing_target = {}
     @@easing_attributes.each do |attr|
-    	@easing_obj[attr] = instance_variable_get("@#{attr}")
+    	easing_target[attr] = instance_variable_get("@#{attr}")
     	attributes[attr] = eval(attr)
     end
 
-		Ease.to(@easing_obj, duration, attributes, {
+		Ease.to(easing_target, duration, attributes, {
 			:easing => easing_method,
 			:observers => [self]})
   end
@@ -51,8 +51,9 @@ class Game_Picture
 
   # Overwrite
 	def update_move(ease_obj)
+		easing_target = ease_obj[:target]
 		@@easing_attributes.each do |attr|
-			self.instance_variable_set("@#{attr}", @easing_obj[attr])
+			self.instance_variable_set("@#{attr}", easing_target[attr])
 		end
 	end
 
