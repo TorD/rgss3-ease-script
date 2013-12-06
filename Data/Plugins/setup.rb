@@ -1,6 +1,7 @@
 # OPTIONAL: This is an optional array of plugins that are to be loaded first, and in the specified order. All other plugins not mentioned here are loaded afterwards and alphabetically.
 # You can leave this array empty.
-PRIORITY_PLUGINS = []
+PRIORITY_PLUGINS = [
+]
 
 # REQUIRED: This is the root plugin directory (the one this file resides in).
 ROOT_PATH = "Data/Plugins"

@@ -71,6 +71,35 @@ module Ease
 
 end
 module Easing
+	BACK_IN			= "back_in"
+	BACK_OUT		= "back_out"
+	BACK_IN_OUT	= "back_in_out"
+
+	SLING				= 1.70158 # This is the intensity of the back "sling" effect
+
+	def self.back_in(t, b, c, d)
+		s = SLING
+		d = d.to_f
+		return c*(t/=d)*t*((s+1)*t - s) + b
+	end
+
+	def self.back_out(t, b, c, d)
+		s = SLING
+		d = d.to_f
+		return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b
+	end
+
+	def self.back_in_out(t, b, c, d)
+		s = SLING
+		d = d.to_f
+		if ((t/=d/2) < 1)
+			return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b
+		else
+			return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b
+		end
+	end
+end
+module Easing
 	BOUNCE_IN			= "bounce_in"
 	BOUNCE_OUT		= "bounce_out"
 	BOUNCE_IN_OUT	= "bounce_in_out"
@@ -96,6 +125,28 @@ module Easing
 			return bounce_in(t*2, 0, c, d) * 0.5 + b
 		else
 			return bounce_out(t*2-d, 0, c, d) * 0.5 + c*0.5 + b
+		end
+	end
+end
+module Easing
+	CIRC_IN			= "circ_in"
+	CIRC_OUT		= "circ_out"
+	CIRC_IN_OUT	= "circ_in_out"
+
+	def self.circ_in(t, b, c, d)
+		return -c * (Math.sqrt(1 - (t/=d.to_f)*t) - 1) + b
+	end
+
+	def self.circ_out(t, b, c, d)
+		return c * Math.sqrt(1 - (t=t/d.to_f-1)*t) + b
+	end
+
+	def self.circ_in_out(t, b, c, d)
+		d = d.to_f
+		if (t/=d/2) < 1
+			return -c/2 * (Math.sqrt(1 - t*t) - 1) + b
+		else
+			return c/2 * (Math.sqrt(1 - (t-=2)*t) + 1) + b
 		end
 	end
 end
@@ -181,6 +232,30 @@ module Easing
 end
 
 
+module Easing
+	EXPO_IN			= "expo_in"
+	EXPO_OUT		= "expo_out"
+	EXPO_IN_OUT	= "expo_in_out"
+
+	def self.expo_in(t, b, c, d)
+		return (t==0) ? b : c * (2**(10 * (t/d.to_f - 1))) + b
+	end
+
+	def self.expo_out(t, b, c, d)
+		return (t==d) ? b+c : c * (-(2**(-10 * t/d.to_f)) + 1) + b
+	end
+
+	def self.expo_in_out(t, b, c, d)
+		d = d.to_f
+		return b if t==0
+		return b+c if t==d
+		if (t/=d/2) < 1
+			return c/2 * (2**(10 * (t - 1))) + b
+		else
+			return c/2 * (-(2**(-10 * (t-=1))) + 2) + b
+		end
+	end
+end
 module Easing
 	LINEAR 			= "linear"
 
