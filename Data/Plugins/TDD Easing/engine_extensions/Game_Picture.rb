@@ -35,7 +35,6 @@ class Game_Picture
   end
 
   def ease_update(ease_obj)
-  	#puts @easing_obj
   	update_move(ease_obj)
   end
 
