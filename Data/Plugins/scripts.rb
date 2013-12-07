@@ -1,6 +1,9 @@
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
+# Version: 1.0.0
+# Author: Galenmereth / Tor Damian Design
+#
 # Description
 # ===========
 # This module is used to apply an easing algorithm to an object's parameters
@@ -70,9 +73,13 @@
 # not required. Share script freely with everyone, but please retain this
 # description area unless you change the script completely. Thank you.
 #==============================================================================
-module Ease
-	@@easings = []
 
+#/////////////////////////////////////////////////////////////////////////
+#// DANGER - BELOW IS ARCANE UNLESS YOU KNOW WHAT YOU'RE DOING - DANGER //
+#/////////////////////////////////////////////////////////////////////////
+module Ease
+  @@easings = []
+	
 	#--------------------------------------------------------------------------
   # * Ease Parameters To Given Attribute Values
   # Params:
@@ -678,6 +685,9 @@ end
 #==============================================================================
 # ** Scene_Base EXTENSION
 #------------------------------------------------------------------------------
+# Version: 1.0.0
+# Author: Galenmereth / Tor Damian Design
+#
 # Extended for: TDD Easing Script
 # ===============================
 # This calls update on the new Ease module, so that all applied easings are
@@ -710,6 +720,9 @@ end
 #==============================================================================
 # ** Game_Picture EXTENSION
 #------------------------------------------------------------------------------
+# Version: 1.0.0
+# Author: Galenmereth / Tor Damian Design
+#
 # Extended for: TDD Easing Script
 # ===============================
 # This extension changes the default transition easing for Move Picture and
@@ -793,7 +806,6 @@ class Game_Picture
     	:observers => [self],
     	:call_on_update => :update_tone_change
     	})
-    puts "Tint: #{@@easing_method}"
   end
 
   #--------------------------------------------------------------------------

@@ -1,6 +1,9 @@
 #==============================================================================
 # ** Scene_Base EXTENSION
 #------------------------------------------------------------------------------
+# Version: 1.0.0
+# Author: Galenmereth / Tor Damian Design
+#
 # Extended for: TDD Easing Script
 # ===============================
 # This calls update on the new Ease module, so that all applied easings are

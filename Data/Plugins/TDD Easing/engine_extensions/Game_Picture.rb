@@ -1,6 +1,9 @@
 #==============================================================================
 # ** Game_Picture EXTENSION
 #------------------------------------------------------------------------------
+# Version: 1.0.0
+# Author: Galenmereth / Tor Damian Design
+#
 # Extended for: TDD Easing Script
 # ===============================
 # This extension changes the default transition easing for Move Picture and
@@ -84,7 +87,6 @@ class Game_Picture
     	:observers => [self],
     	:call_on_update => :update_tone_change
     	})
-    puts "Tint: #{@@easing_method}"
   end
 
   #--------------------------------------------------------------------------

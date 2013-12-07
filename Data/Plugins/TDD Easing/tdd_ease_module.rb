@@ -1,6 +1,9 @@
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
+# Version: 1.0.0
+# Author: Galenmereth / Tor Damian Design
+#
 # Description
 # ===========
 # This module is used to apply an easing algorithm to an object's parameters
@@ -70,9 +73,13 @@
 # not required. Share script freely with everyone, but please retain this
 # description area unless you change the script completely. Thank you.
 #==============================================================================
-module Ease
-	@@easings = []
 
+#/////////////////////////////////////////////////////////////////////////
+#// DANGER - BELOW IS ARCANE UNLESS YOU KNOW WHAT YOU'RE DOING - DANGER //
+#/////////////////////////////////////////////////////////////////////////
+module Ease
+  @@easings = []
+	
 	#--------------------------------------------------------------------------
   # * Ease Parameters To Given Attribute Values
   # Params:
