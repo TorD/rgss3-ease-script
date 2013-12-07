@@ -1,3 +1,28 @@
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds 3 new easing methods to the Easing module:
+# * CIRC_IN
+# * CIRC_OUT
+# * CIRC_IN_OUT
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::CIRC_IN (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	CIRC_IN			= "circ_in"
 	CIRC_OUT		= "circ_out"

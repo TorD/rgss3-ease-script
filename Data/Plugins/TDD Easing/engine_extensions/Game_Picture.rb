@@ -16,13 +16,13 @@
 # Credit:
 # =======
 # - Galenmereth / Tor Damian Design
+#
 # License:
 # ========
 # Free for non-commercial and commercial use. Credit greatly appreciated but
 # not required. Share script freely with everyone, but please retain this
 # description area unless you change the script completely. Thank you.
 #==============================================================================
-
 class Game_Picture
 	# Global default easing method; can be set using Game_Picture.easing_default=
 	@@easing_method_default = Easing::LINEAR

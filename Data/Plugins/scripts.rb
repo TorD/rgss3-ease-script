@@ -1,19 +1,188 @@
+#==============================================================================
+# ** TDD Ease Module
+#------------------------------------------------------------------------------
+# Description
+# ===========
+# This module is used to apply an easing algorithm to an object's parameters
+# over X amount of frames. Easing methods can be extended through adding
+# static methods to the Easing module. The default easing method is
+# Easing::LINEAR and is identical to the default easing provided in VXAce
+#
+# How to use in event editor:
+# ===========================
+# Included with this script is an extension to the Game_Picture class that lets
+# you change the easing method of the event editor commands Move Picture and
+# Tint Picture.
+#
+# Before calling Move Picture and Tint Picture for a picture in the event editor,
+# make a script call like this:
+# 	Game_Picture.easing = Easing::ELASTIC_OUT
+# This will set the easing method to the ELASTIC_OUT algorithm. When you erase
+# any picture, the easing method is reset to the default (Easing::LINEAR by
+# default)
+#
+# You can provide different easing methods for different events as well, by
+# setting Game_Picture.easing between each call. It is remembered for each
+# event call the moment it starts.
+#
+# If you wish to set the default easing, you use:
+# 	Game_Picture.easing_default = Easing::QUAD_IN
+#
+# This is the list of included easing methods (the part that go after Easing::)
+#
+# * LINEAR (default, and like the default in VXAce)
+#
+# * BACK_IN
+# * BACK_IN_OUT
+# * BACK_OUT
+#
+# * BOUNCE_IN
+# * BOUNCE_IN_OUT
+# * BOUNCE_OUT
+#
+# * CIRC_IN
+# * CIRC_IN_OUT
+# * CIRC_OUT
+#
+# * CUBIC_IN
+# * CUBIC_IN_OUT
+# * CUBIC_OUT
+#
+# * ELASTIC_IN
+# * ELASTIC_IN_OUT
+# * ELASTIC_OUT
+#
+# * EXPO_IN
+# * EXPO_IN_OUT
+# * EXPO_OUT
+#
+# * QUAD_IN
+# * QUAD_IN_OUT
+# * QUAD_OUT
+# 
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Ease
 	@@easings = []
 
-	# Available opts:
-	# 	:easing => Easing method, use Easing::METHOD (default is Easing::LINEAR)
-	#   :observers => Array of observer classes. Must respond to the following methods:
-	# 		ease_update(ease_obj)
-	# 		ease_complete(ease_obj)
+	#--------------------------------------------------------------------------
+  # * Ease Parameters To Given Attribute Values
+  # Params:
+  # =======
+  # -	target (Object)
+  #			An object which has the attributes listed in attributes and which 
+  # 		you want to effect with an easing FROM its current values TO
+  # 		the values given in the attributes hash
+  # -	frames (Integer)
+  # 		The amount of frames to apply the easing over
+  # -	attributes (Hash)
+  # 		Hash of attributes and target values for the attributes you wish to
+  # 		affect on the target object
+  # - opts (Hash)
+  # 		Hash of optional options:
+  # 			:easing 					=> 	Easing method to use (default = Easing::LINEAR)
+  # 			:observers 				=> 	Array of observer objects (default = nil)
+  # 			:call_on_update 	=>	Method to call on observers every update tick
+  # 														(default = false)
+  # 			:call_on_complete => 	Method to call on observers when easing is
+  # 														complete (default = false)
+  # Example:
+  # ========
+  # target_obj = {:x => 0, :y => 0}
+  # target_attributes = {:x => 250, :y => 100}
+  # options = {
+  #		:easing 				=> Easing::BOUNCE_IN,
+  # 	:observers 			=> [self],
+  # 	:call_on_update => :update (can also be writtens as "update")
+  #	}
+  # Ease.to(target_obj, 60, target_attributes, opts)
+  # 
+  # This would ease the movement of target_object from 0x and 0y to 250x and
+  # 100y over 60 frames (1 second) using the Easing::BOUNCE_IN easing method.
+  # Every easing update (each frame) would call the method update on the
+  # observer objects (self, in this case).
+  #
+  # Comments:
+  # =========
+  # Depending on how your objects or classes are set up, you may need to use
+  # an "intermediary" object (like the target_obj hash in the example) to
+  # hold the attributes, then apply the values form this "intermediary" object
+  # to the attributes of the class when the :call_on_update method is called.
+  # The reason for this is that you may not necessarily want the easing
+  # function to write directly to a caller class. Look at the Game_Picture
+  # extension for an example of this necessity, where I didn't want to make
+  # any of the read-only attributes writable to implement easing.
+  #--------------------------------------------------------------------------
 	def self.to(target, frames, attributes={}, opts={})
 		register_ease(:to, target, frames, attributes, opts)
 	end
 
+	#--------------------------------------------------------------------------
+  # * Ease Parameters From Given Attribute Values To Current Attribute Values
+  # Params:
+  # =======
+  # -	target (Object)
+  #			An object which has the attributes listed in attributes and which 
+  # 		you want to effect with an easing FROM its current values TO
+  # 		the values given in the attributes hash
+  # -	frames (Integer)
+  # 		The amount of frames to apply the easing over
+  # -	attributes (Hash)
+  # 		Hash of attributes and target values for the attributes you wish to
+  # 		affect on the target object
+  # - opts (Hash)
+  # 		Hash of optional options:
+  # 			:easing 					=> 	Easing method to use (default = Easing::LINEAR)
+  # 			:observers 				=> 	Array of observer objects (default = nil)
+  # 			:call_on_update 	=>	Method to call on observers every update tick
+  # 														(default = false)
+  # 			:call_on_complete => 	Method to call on observers when easing is
+  # 														complete (default = false)
+  # Example:
+  # ========
+  # target_obj = {:x => 0, :y => 0}
+  # origin_attributes = {:x => 250, :y => 100}
+  # options = {
+  #		:easing 				=> Easing::BOUNCE_IN,
+  # 	:observers 			=> [self],
+  # 	:call_on_update => :update (can also be writtens as "update")
+  #	}
+  # Ease.to(target_obj, 60, origin_attributes, opts)
+  # 
+  # This would ease the movement of target_object from 250x and 100y to 0x and
+  # 0y over 60 frames (1 second) using the Easing::BOUNCE_IN easing method.
+  # Every easing update (each frame) would call the method update on the
+  # observer objects (self, in this case).
+  #
+  # You might scratch your head and wonder "well, gosh, what's the point of this
+  # when we already have the to method?"
+  # This method is useful in instances where it's easier or more convenient to place
+  # an object where you want it to end up, then set it to ease from an origin
+  # point.
+  #
+  # Comments:
+  # =========
+  # Look at comments for the "to" method
+  #--------------------------------------------------------------------------
 	def self.from(target, frames, attributes={}, opts={})
 		register_ease(:from, target, frames, attributes, opts)
 	end
 
+	#--------------------------------------------------------------------------
+  # * Updates All Easings Every Engine Frame Tick
+  #
+  # Comments:
+  # =========
+  # Called by Scene_Base when the extension is in place for it.
+  #--------------------------------------------------------------------------
 	def self.update
 		@@easings.each_with_index do |ease, index|
 			target = ease[:target]
@@ -27,7 +196,12 @@ module Ease
 					from = value
 					to = attribute_origin
 				end
-				target[attribute] = Easing.send(ease[:easing], ease[:frame], from, to - from, ease[:frames])
+				# Move instantly if frames is 1
+				if ease[:frames] == 1
+					target[attribute] = to
+				else
+					target[attribute] = Easing.send(ease[:easing], ease[:frame], from, to - from, ease[:frames])
+				end
 			end
 
 			ease[:observers].each{|o| o.send(ease[:call_on_update], ease)} if ease[:call_on_update]
@@ -41,8 +215,10 @@ module Ease
 	end
 
 	private
+	#--------------------------------------------------------------------------
+  # * Register An Ease Object in Queue
+  #--------------------------------------------------------------------------
 	def self.register_ease(method, target, frames, attributes, opts)
-
 		attributes_origin = {}
 		attributes.each_pair do |attr, value|
 			case method
@@ -61,7 +237,7 @@ module Ease
 			:method => method,
 			:frame => 0,
 			:frames => frames,
-			# Default options from opts follow
+			# Default options for opts follow
 			:easing => Easing::LINEAR,
 			:observers => [],
 			:call_on_update => false,
@@ -72,12 +248,39 @@ module Ease
 	end
 
 end
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds 3 new easing methods to the Easing module:
+# * BACK_IN
+# * BACK_OUT
+# * BACK_IN_OUT
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::BACK_IN (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	BACK_IN			= "back_in"
 	BACK_OUT		= "back_out"
 	BACK_IN_OUT	= "back_in_out"
 
-	SLING				= 1.70158 # This is the intensity of the back "sling" effect
+	# This is the intensity of the back "sling" effect. Higher = stronger
+	SLING				= 1.70158
 
 	def self.back_in(t, b, c, d)
 		s = SLING
@@ -101,6 +304,32 @@ module Easing
 		end
 	end
 end
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds 3 new easing methods to the Easing module:
+# * BOUNCE_IN
+# * BOUNCE_OUT
+# * BOUNCE_IN_OUT
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::BOUNCE_IN (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	BOUNCE_IN			= "bounce_in"
 	BOUNCE_OUT		= "bounce_out"
@@ -130,6 +359,31 @@ module Easing
 		end
 	end
 end
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds 3 new easing methods to the Easing module:
+# * CIRC_IN
+# * CIRC_OUT
+# * CIRC_IN_OUT
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::CIRC_IN (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	CIRC_IN			= "circ_in"
 	CIRC_OUT		= "circ_out"
@@ -152,6 +406,32 @@ module Easing
 		end
 	end
 end
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds 3 new easing methods to the Easing module:
+# * CUBIC_IN
+# * CUBIC_OUT
+# * CUBIC_IN_OUT
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::CUBIC_IN (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	CUBIC_IN 			= "cubic_in"
 	CUBIC_OUT 		= "cubic_out"
@@ -175,6 +455,32 @@ module Easing
 		return c/2*(t*t*t + 2) + b
 	end
 end
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds 3 new easing methods to the Easing module:
+# * ELASTIC_IN
+# * ELASTIC_OUT
+# * ELASTIC_IN_OUT
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::ELASTIC_IN (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	ELASTIC_IN			= "elastic_in"
 	ELASTIC_OUT			= "elastic_out"
@@ -234,6 +540,32 @@ module Easing
 end
 
 
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds 3 new easing methods to the Easing module:
+# * EXPO_IN
+# * EXPO_OUT
+# * EXPO_IN_OUT
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::EXPO_IN (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	EXPO_IN			= "expo_in"
 	EXPO_OUT		= "expo_out"
@@ -258,6 +590,31 @@ module Easing
 		end
 	end
 end
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds the LINEAR easing method to the Easing module. This is the
+# default easing method, which is identical to the default easing performed in
+# VXAce
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::LINEAR (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	LINEAR 			= "linear"
 
@@ -270,6 +627,32 @@ module Easing
 		return c*t/d.to_f + b
 	end
 end
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds 3 new easing methods to the Easing module:
+# * QUAD_IN
+# * QUAD_OUT
+# * QUAD_IN_OUT
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::QUAD_IN (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	QUAD_IN				= "quad_ease_in"
 	QUAD_OUT			= "quad_ease_out"
@@ -292,20 +675,68 @@ module Easing
 		return -c/2 * (t*(t-2) - 1) + b
 	end
 end
+#==============================================================================
+# ** Scene_Base EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This calls update on the new Ease module, so that all applied easings are
+# updated each frame tick. Nothing else.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 class Scene_Base
+	#--------------------------------------------------------------------------
+  # * ALIAS Frame Update
+  # Comments:
+  # 	Ease.update is called first so that the actual drawing performed by the
+  # 	original update_basic calls are performed after attributes have been
+  # 	set by active easing procedures.
+  #--------------------------------------------------------------------------
 	alias_method :tdd_easing_scene_update_basic_extension, :update_basic
 	def update_basic
-		update_easing
+		Ease.update
 		tdd_easing_scene_update_basic_extension
 	end
-
-	# New method; updates active easing each frame
-	def update_easing
-		Ease.update
-	end
 end
+#==============================================================================
+# ** Game_Picture EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension changes the default transition easing for Move Picture and
+# Tint Picture, so that it uses the TDD Easing script motion instead.
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing= to set an easing method before calling move or 
+# start_tone_change, either through scripts or through the use of Move Picture
+# and Tint Picture event calls. Look at self.easing and self.easing_default
+# for more details
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 class Game_Picture
+	# Global default easing method; can be set using Game_Picture.easing_default=
 	@@easing_method_default = Easing::LINEAR
+
+	# List of variables to use for easing movement
 	@@easing_move_attributes = %w(
 		x
 		y
@@ -313,21 +744,14 @@ class Game_Picture
 		zoom_y
 		opacity
 		duration)
+
+	# List of variables to use for easing tone change
 	@@easing_tint_attributes = %w(
 		red
 		green
 		blue
 		gray
 		)
-
-	#--------------------------------------------------------------------------
-  # * ALIAS Object Initialization
-  #--------------------------------------------------------------------------
-  alias_method :tdd_easing_initialize_extension, :initialize
-	def initialize(number)
-		tdd_easing_initialize_extension(number)
-		puts "Game_Picture initialize"
-	end
 
 	#--------------------------------------------------------------------------
   # * ALIAS Move Picture
@@ -374,6 +798,9 @@ class Game_Picture
 
   #--------------------------------------------------------------------------
   # * ALIAS Erase Picture
+  # Comments:
+  # 	The class static variable @@easing_method is reset to
+  # 	@@easing_method_default upon erasure.
   #--------------------------------------------------------------------------
   alias_method :tdd_easing_erase_extension, :erase
   def erase
@@ -383,13 +810,22 @@ class Game_Picture
 
   #--------------------------------------------------------------------------
   # * OVERWRITE Frame Update
+  # Comments:
+  # 	update_move and update_tone_change left commented out to make it clear
+  # 	that these have been disabled
   #--------------------------------------------------------------------------
   def update
+  	# update_move
+  	# update_tone_change
   	update_rotate
   end
 
   #--------------------------------------------------------------------------
   # * ALIAS Update Picture Move
+  # Comments:
+  # 	In case other scripts want to call update_move for any reason,
+  # 	I make it check for the ease_obj from the easing; if it's not there,
+  # 	it uses the default update_move method
   #-------------------------------------------------------------------------
   alias_method :tdd_easing_update_move_extension, :update_move
 	def update_move(ease_obj = nil)
@@ -405,6 +841,10 @@ class Game_Picture
 
 	#--------------------------------------------------------------------------
   # * ALIAS Update Color Tone Change
+  # Comments:
+  # 	In case other scripts want to call update_tone_change for any reason,
+  # 	I make it check for the ease_obj from the easing; if it's not there,
+  # 	it uses the default update_tone_change method
   #--------------------------------------------------------------------------
   alias_method :tdd_easing_update_tone_change_extension, :update_tone_change
   def update_tone_change(ease_obj)

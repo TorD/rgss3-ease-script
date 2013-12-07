@@ -1,9 +1,36 @@
+#==============================================================================
+# ** Easing EXTENSION
+#------------------------------------------------------------------------------
+# Extended for: TDD Easing Script
+# ===============================
+# This extension adds 3 new easing methods to the Easing module:
+# * BACK_IN
+# * BACK_OUT
+# * BACK_IN_OUT
+#
+# How to use:
+# ===========
+# Use Game_Picture.easing = Easing::BACK_IN (or any of the other three methods
+# listed above) to apply before performing moving or tinting of the Game_Picture
+# class.
+#
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
 module Easing
 	BACK_IN			= "back_in"
 	BACK_OUT		= "back_out"
 	BACK_IN_OUT	= "back_in_out"
 
-	SLING				= 1.70158 # This is the intensity of the back "sling" effect
+	# This is the intensity of the back "sling" effect. Higher = stronger
+	SLING				= 1.70158
 
 	def self.back_in(t, b, c, d)
 		s = SLING
