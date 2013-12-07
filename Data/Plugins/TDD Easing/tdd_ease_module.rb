@@ -30,12 +30,12 @@ module Ease
 				target[attribute] = Easing.send(ease[:easing], ease[:frame], from, to - from, ease[:frames])
 			end
 
+			ease[:observers].each{|o| o.send(ease[:call_on_update], ease)} if ease[:call_on_update]
+
 			ease[:frame] += 1
 			if ease[:frame] > ease[:frames]
 				@@easings.delete_at(index)
-				ease[:observers].each{|o| o.send(:ease_complete, ease)}
-			else
-				ease[:observers].each{|o| o.send(:ease_update, ease)}
+				ease[:observers].each{|o| o.send(ease[:call_on_complete], ease)} if ease[:call_on_complete]
 			end
 		end
 	end
@@ -63,7 +63,9 @@ module Ease
 			:frames => frames,
 			# Default options from opts follow
 			:easing => Easing::LINEAR,
-			:observers => []
+			:observers => [],
+			:call_on_update => false,
+			:call_on_complete => false
 		}.merge(opts)
 
 		@@easings << ease_obj

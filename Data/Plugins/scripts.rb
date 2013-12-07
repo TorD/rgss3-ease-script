@@ -30,12 +30,12 @@ module Ease
 				target[attribute] = Easing.send(ease[:easing], ease[:frame], from, to - from, ease[:frames])
 			end
 
+			ease[:observers].each{|o| o.send(ease[:call_on_update], ease)} if ease[:call_on_update]
+
 			ease[:frame] += 1
 			if ease[:frame] > ease[:frames]
 				@@easings.delete_at(index)
-				ease[:observers].each{|o| o.send(:ease_complete, ease)}
-			else
-				ease[:observers].each{|o| o.send(:ease_update, ease)}
+				ease[:observers].each{|o| o.send(ease[:call_on_complete], ease)} if ease[:call_on_complete]
 			end
 		end
 	end
@@ -63,7 +63,9 @@ module Ease
 			:frames => frames,
 			# Default options from opts follow
 			:easing => Easing::LINEAR,
-			:observers => []
+			:observers => [],
+			:call_on_update => false,
+			:call_on_complete => false
 		}.merge(opts)
 
 		@@easings << ease_obj
@@ -303,69 +305,130 @@ class Scene_Base
 	end
 end
 class Game_Picture
-	@@easing_method = Easing::LINEAR
-	@@easing_method_temp = @@easing_method
-	@@easing_attributes = %w(
+	@@easing_method_default = Easing::LINEAR
+	@@easing_move_attributes = %w(
 		x
 		y
 		zoom_x
 		zoom_y
 		opacity
 		duration)
+	@@easing_tint_attributes = %w(
+		red
+		green
+		blue
+		gray
+		)
 
-	# Aliased
-	alias_method :easing_game_picture_move_extension, :move
+	#--------------------------------------------------------------------------
+  # * ALIAS Object Initialization
+  #--------------------------------------------------------------------------
+  alias_method :tdd_easing_initialize_extension, :initialize
+	def initialize(number)
+		tdd_easing_initialize_extension(number)
+		puts "Game_Picture initialize"
+	end
+
+	#--------------------------------------------------------------------------
+  # * ALIAS Move Picture
+  #--------------------------------------------------------------------------
+	alias_method :tdd_easing_move_extension, :move
 	def move(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration)
-    easing_game_picture_move_extension(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration)
+    tdd_easing_move_extension(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration)
 
-    attributes = {}
-    easing_target = {}
-    @@easing_attributes.each do |attr|
-    	easing_target[attr] = instance_variable_get("@#{attr}")
-    	attributes[attr] = eval(attr)
+    target_attributes = {}
+    easing_container = {}
+    @@easing_move_attributes.each do |attr|
+    	easing_container[attr] = instance_variable_get("@#{attr}")
+    	target_attributes[attr] = eval(attr)
+    end
+    puts @easing_method
+		Ease.to(easing_container, duration, target_attributes, {
+			:easing => @@easing_method,
+			:observers => [self],
+			:call_on_update => :update_move
+			})
+  end
+
+  #--------------------------------------------------------------------------
+  # * ALIAS Start Changing Color Tone
+  #--------------------------------------------------------------------------
+  alias_method :tdd_easing_start_tone_change_extension, :start_tone_change
+  def start_tone_change(tone, duration)
+  	tdd_easing_start_tone_change_extension(tone, duration)
+
+  	easing_container = {}
+  	target_attributes = {}
+    @@easing_tint_attributes.each do |attr|
+    	easing_container[attr] = @tone.send(attr)
+    	target_attributes[attr] = @tone_target.send(attr)
     end
 
-		Ease.to(easing_target, duration, attributes, {
-			:easing => easing_method,
-			:observers => [self]})
+    Ease.to(easing_container, duration, target_attributes, {
+    	:easing => @@easing_method,
+    	:observers => [self],
+    	:call_on_update => :update_tone_change
+    	})
+    puts "Tint: #{@@easing_method}"
   end
 
-  def ease_update(ease_obj)
-  	update_move(ease_obj)
+  #--------------------------------------------------------------------------
+  # * ALIAS Erase Picture
+  #--------------------------------------------------------------------------
+  alias_method :tdd_easing_erase_extension, :erase
+  def erase
+  	tdd_easing_erase_extension
+  	@@easing_method = @@easing_method_default
   end
 
-  def ease_complete(ease_obj)
-  	update_move(ease_obj)
-  end
-
-  # Overwrite (should be empty; all methods should use easing)
+  #--------------------------------------------------------------------------
+  # * OVERWRITE Frame Update
+  #--------------------------------------------------------------------------
   def update
-  	return
-  	#update_tone_change
-  	#update_rotate
+  	update_rotate
   end
 
-  # Overwrite
-	def update_move(ease_obj)
-		easing_target = ease_obj[:target]
-		@@easing_attributes.each do |attr|
-			instance_variable_set("@#{attr}", easing_target[attr])
+  #--------------------------------------------------------------------------
+  # * ALIAS Update Picture Move
+  #-------------------------------------------------------------------------
+  alias_method :tdd_easing_update_move_extension, :update_move
+	def update_move(ease_obj = nil)
+		unless ease_obj
+			tdd_easing_update_move_extension
+			return
+		end
+		easing_container = ease_obj[:target]
+		@@easing_move_attributes.each do |attr|
+			instance_variable_set("@#{attr}", easing_container[attr])
 		end
 	end
 
-	# Static method
-	def self.easing=(easing_method)
-		@@easing_method_temp = easing_method
-	end
+	#--------------------------------------------------------------------------
+  # * ALIAS Update Color Tone Change
+  #--------------------------------------------------------------------------
+  alias_method :tdd_easing_update_tone_change_extension, :update_tone_change
+  def update_tone_change(ease_obj)
+  	unless ease_obj
+			tdd_easing_update_tone_change_extension
+			return
+		end
+  	easing_container = ease_obj[:target]
+  	@@easing_tint_attributes.each do |attr|
+  		@tone.send("#{attr}=", easing_container[attr])
+    end
+  end
 
-	def self.easing_default=(easing_method)
+  #--------------------------------------------------------------------------
+  # * NEW Static Method Set Easing
+  #--------------------------------------------------------------------------
+	def self.easing=(easing_method)
 		@@easing_method = easing_method
 	end
 
-	private
-	def easing_method
-		e = @@easing_method_temp
-		@@easing_method_temp = @@easing_method
-		e
+	#--------------------------------------------------------------------------
+  # * NEW Static Method Set Easing Default for Game_Picture class
+  #--------------------------------------------------------------------------
+	def self.easing_default=(easing_method)
+		@@easing_method_default = easing_method
 	end
 end
