@@ -753,7 +753,6 @@ $imported["TDD Easing Core<-Game_CharacterBase"] = true
 class Game_CharacterBase
 	@easing = false
 	def ease_moveto(x, y, duration, easing = :linear)
-		puts "ease_moveto called with x#{x} y#{y} d#{duration}"
 		@wait_count = duration - 1
 		@easing = true
 		easing_container = {
@@ -765,7 +764,7 @@ class Game_CharacterBase
 			y: y
 		}
 		Ease.to(easing_container, duration, target_attributes, {
-			:easing => easing,
+			easing: easing,
 			observers: [self],
 			call_on_update: :ease_moveto_update,
 			call_on_complete: :ease_moveto_complete
@@ -782,6 +781,27 @@ class Game_CharacterBase
 	def ease_moveto_complete(ease_obj)
 		@x = @real_x
 		@y = @real_y
+		@easing = false
+	end
+
+	def ease_opacity(opacity, duration, easing = :linear)
+		@wait_count = duration - 1
+		@easing = true
+		easing_container = {opacity: @opacity}
+		target_attributes = {opacity: opacity}
+		Ease.to(easing_container, duration, target_attributes, {
+			easing: easing,
+			observers: [self],
+			call_on_update: :ease_opacity_update,
+			call_on_complete: :ease_opacity_complete
+			})
+	end
+
+	def ease_opacity_update(ease_obj)
+		@opacity = ease_obj[:target][:opacity]
+	end
+
+	def ease_opacity_complete(ease_obj)
 		@easing = false
 	end
 
