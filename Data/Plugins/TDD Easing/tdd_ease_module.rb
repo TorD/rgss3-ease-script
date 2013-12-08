@@ -1,9 +1,14 @@
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
-# Version: 1.0.0
-# Author: Galenmereth / Tor Damian Design
+# Version:  1.0.1
+# Date:     08/12/2013
+# Author:   Galenmereth / Tor Damian Design
 #
+# Changelog
+# =========
+# Introduced the TDD module namespace and Ease_Object instead of using a hash
+# 
 # Description
 # ===========
 # This module is used to apply an easing algorithm to an object's parameters

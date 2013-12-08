@@ -1,8 +1,9 @@
 #==============================================================================
 # ** Scene_Base EXTENSION
 #------------------------------------------------------------------------------
-# Version: 1.0.0
-# Author: Galenmereth / Tor Damian Design
+# Version:  1.0.1
+# Date:     08/12/2013
+# Author:   Galenmereth / Tor Damian Design
 #
 # Extended for: TDD Easing Script
 # ===============================

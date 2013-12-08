@@ -1,69 +1,14 @@
-module TDD
-	class Ease_Object
-		attr_reader		:method
-		attr_reader		:target
-		attr_reader		:frames
-		attr_reader 	:attributes
-		attr_reader		:attributes_origin
-
-		attr_accessor	:frame
-		
-		def initialize(method, target, frames, attributes={}, options={})
-			@method 		= method
-			@target 		= target
-			@frames 		= frames
-			@attributes = attributes
-			@options 		= default_options.merge(options)
-
-			# Current frame starts at 0
-			@frame = 0
-
-			# Set origin of attributes for ease depending on method
-			@attributes_origin = {}
-			@attributes.each_pair do |attr, val|
-				case method
-				when :to
-          @attributes_origin[attr] = target[attr]
-        when :from
-          @attributes_origin[attr] = value
-          attributes[attr] = target[attr]
-        end
-			end
-		end
-
-		def easing
-			@options[:easing]
-		end
-
-		def observers
-			@options[:observers]
-		end
-
-		def call_on_update
-			@options[:call_on_update]
-		end
-
-		def call_on_complete
-			@options[:call_on_complete]
-		end
-
-		private
-		def default_options
-			{
-				:easing => Easing::LINEAR,
-        :observers => [],
-        :call_on_update => false,
-        :call_on_complete => false
-			}
-		end
-	end
-end
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
-# Version: 1.0.0
-# Author: Galenmereth / Tor Damian Design
+# Version:  1.0.1
+# Date:     08/12/2013
+# Author:   Galenmereth / Tor Damian Design
 #
+# Changelog
+# =========
+# Introduced the TDD module namespace and Ease_Object instead of using a hash
+# 
 # Description
 # ===========
 # This module is used to apply an easing algorithm to an object's parameters
@@ -293,6 +238,90 @@ module TDD
       @@easings << TDD::Ease_Object.new(method, target, frames, attributes, options)
     end
 
+  end
+end
+#==============================================================================
+# ** TDD Ease Object
+#------------------------------------------------------------------------------
+# Version:  1.0.1
+# Date:     08/12/2013
+# Author:   Galenmereth / Tor Damian Design
+# 
+# Description
+# ===========
+# This module is used to apply an easing algorithm to an object's parameters
+# over X amount of frames. Easing methods can be extended through adding
+# static methods to the Easing module. The default easing method is
+# Easing::LINEAR and is identical to the default easing provided in VXAce
+# 
+# Credit:
+# =======
+# - Galenmereth / Tor Damian Design
+#
+# License:
+# ========
+# Free for non-commercial and commercial use. Credit greatly appreciated but
+# not required. Share script freely with everyone, but please retain this
+# description area unless you change the script completely. Thank you.
+#==============================================================================
+module TDD
+  class Ease_Object
+    attr_reader   :method
+    attr_reader   :target
+    attr_reader   :frames
+    attr_reader   :attributes
+    attr_reader   :attributes_origin
+
+    attr_accessor :frame
+    
+    def initialize(method, target, frames, attributes={}, options={})
+      @method     = method
+      @target     = target
+      @frames     = frames
+      @attributes = attributes
+      @options    = default_options.merge(options)
+
+      # Current frame starts at 0
+      @frame = 0
+
+      # Set origin of attributes for ease depending on method
+      @attributes_origin = {}
+      @attributes.each_pair do |attr, val|
+        case method
+        when :to
+          @attributes_origin[attr] = target[attr]
+        when :from
+          @attributes_origin[attr] = value
+          attributes[attr] = target[attr]
+        end
+      end
+    end
+
+    def easing
+      @options[:easing]
+    end
+
+    def observers
+      @options[:observers]
+    end
+
+    def call_on_update
+      @options[:call_on_update]
+    end
+
+    def call_on_complete
+      @options[:call_on_complete]
+    end
+
+    private
+    def default_options
+      {
+        :easing => Easing::LINEAR,
+        :observers => [],
+        :call_on_update => false,
+        :call_on_complete => false
+      }
+    end
   end
 end
 #==============================================================================
@@ -726,8 +755,9 @@ end
 #==============================================================================
 # ** Scene_Base EXTENSION
 #------------------------------------------------------------------------------
-# Version: 1.0.0
-# Author: Galenmereth / Tor Damian Design
+# Version:  1.0.1
+# Date:     08/12/2013
+# Author:   Galenmereth / Tor Damian Design
 #
 # Extended for: TDD Easing Script
 # ===============================
@@ -761,8 +791,9 @@ end
 #==============================================================================
 # ** Game_CharacterBase EXTENSION
 #------------------------------------------------------------------------------
-# Version: 1.0.0
-# Author: Galenmereth / Tor Damian Design
+# Version:  1.0.0
+# Date:     08/12/2013
+# Author:   Galenmereth / Tor Damian Design
 #
 # Extended for: TDD Easing Script
 # ===============================
@@ -784,79 +815,135 @@ end
 #==============================================================================
 $imported = {} if $imported.nil?
 # Is TDD Ease installed?
-raise "You need the TDD Easing Script to use this extension!" unless 	$imported["TDD Easing Core"] || (Plugins && Plugins.has_plugin?("TDD Easing Core"))
+raise "You need the TDD Easing Script to use this extension!" unless  $imported["TDD Easing Core"] || (Plugins && Plugins.has_plugin?("TDD Easing Core"))
 $imported["TDD Easing Core<-Game_CharacterBase"] = true
 
 class Game_CharacterBase
-	@easing = false
+  @easing = false
+  #--------------------------------------------------------------------------
+  # * NEW Move Character To Other Character
+  # Params:
+  # =======
+  # - char (integer)
+  #     An integer noting the character to move to.
+  #     -1 -> player
+  #     0 -> the current object calling this method
+  #     1-x -> event id on the current map
+  # - frames (integer)
+  #     How many frames the easing should last for
+  # - easing (:symbol or "string")
+  #     The easing method to apply. Default is :linear
+  #--------------------------------------------------------------------------
+  def ease_moveto_char(char, frames, easing = :linear)
+    char = @interpreter.get_character(char)
+    ease_moveto(char.x, char.y, frames, easing)
+  end
 
-	def ease_moveto_char(char, duration, easing = :linear)
-		char = @interpreter.get_character(char)
-		ease_moveto(char.x, char.y, duration, easing)
-	end
+  #--------------------------------------------------------------------------
+  # * NEW Move To Position
+  # Params:
+  # =======
+  # - x (integer or "string")
+  #     The x position to move to.
+  #     if integer then absolute X position on map
+  #     if string then relative to current position. Examples:
+  #       "0" -> 0 from current x pos
+  #       "-5" -> -5 from current x pos
+  #       "5" or "+5" -> +5 from current x pos
+  # - y (integer or "string")
+  #     The y position to move to. Same rules as x param
+  # - frames (integer)
+  #     How many frames the easing should last for
+  #  - easing (:symbol or "string")
+  #     The easing method to apply. Default is :linear
+  #--------------------------------------------------------------------------
+  def ease_moveto(x, y, frames, easing = :linear)
+    x = @real_x + x.to_i if x.is_a? String
+    y = @real_y + y.to_i if y.is_a? String
+    @wait_count = frames - 1
+    @easing = true
+    easing_container = {
+      x: @real_x,
+      y: @real_y
+    }
+    target_attributes = {
+      x: x,
+      y: y
+    }
+    TDD::Ease.to(easing_container, frames, target_attributes, {
+      easing: easing,
+      observers: [self],
+      call_on_update: :ease_moveto_update,
+      call_on_complete: :ease_moveto_complete
+      })
+  end
 
-	def ease_moveto(x, y, duration, easing = :linear)
-		x = @real_x + x.to_i if x.is_a? String
-		y = @real_y + y.to_i if y.is_a? String
-		@wait_count = duration - 1
-		@easing = true
-		easing_container = {
-			x: @real_x,
-			y: @real_y
-		}
-		target_attributes = {
-			x: x,
-			y: y
-		}
-		TDD::Ease.to(easing_container, duration, target_attributes, {
-			easing: easing,
-			observers: [self],
-			call_on_update: :ease_moveto_update,
-			call_on_complete: :ease_moveto_complete
-			})
-	end
+  #--------------------------------------------------------------------------
+  # * NEW Ease To Opacity
+  # Params:
+  # =======
+  # - opacity (integer)
+  #     Target opacity to ease to
+  # - frames (integer)
+  #     How many frames the easing should last for
+  #  - easing (:symbol or "string")
+  #     The easing method to apply. Default is :linear
+  #--------------------------------------------------------------------------
+  def ease_opacity(opacity, frames, easing = :linear)
+    opacity = @opacity + opacity.to_i if opacity.is_a? String
+    @wait_count = frames - 1
+    @easing = true
+    easing_container = {opacity: @opacity}
+    target_attributes = {opacity: opacity}
+    TDD::Ease.to(easing_container, frames, target_attributes, {
+      easing: easing,
+      observers: [self],
+      call_on_update: :ease_opacity_update,
+      call_on_complete: :ease_opacity_complete
+      })
+  end
 
-	def ease_moveto_update(ease_obj)
-		easing_container = ease_obj.target
-		@real_x = easing_container[:x]
-		@real_y = easing_container[:y]
-		increase_steps
-	end
+  #--------------------------------------------------------------------------
+  # * NEW Update Display Position (used by ease_moveto ease)
+  #--------------------------------------------------------------------------
+  def ease_moveto_update(ease_obj)
+    easing_container = ease_obj.target
+    @real_x = easing_container[:x]
+    @real_y = easing_container[:y]
+    increase_steps
+  end
 
-	def ease_moveto_complete(ease_obj)
-		@x = @real_x
-		@y = @real_y
-		@easing = false
-	end
+  #--------------------------------------------------------------------------
+  # * NEW Finalize And Update Map Position (used by ease_moveto ease)
+  #--------------------------------------------------------------------------
+  def ease_moveto_complete(ease_obj)
+    @x = @real_x
+    @y = @real_y
+    @easing = false
+  end
 
-	def ease_opacity(opacity, duration, easing = :linear)
-		opacity = @opacity + opacity.to_i if opacity.is_a? String
-		@wait_count = duration - 1
-		@easing = true
-		easing_container = {opacity: @opacity}
-		target_attributes = {opacity: opacity}
-		TDD::Ease.to(easing_container, duration, target_attributes, {
-			easing: easing,
-			observers: [self],
-			call_on_update: :ease_opacity_update,
-			call_on_complete: :ease_opacity_complete
-			})
-	end
+  #--------------------------------------------------------------------------
+  # * NEW Update Opacity (used by ease_opacity ease)
+  #--------------------------------------------------------------------------
+  def ease_opacity_update(ease_obj)
+    @opacity = ease_obj.target[:opacity]
+  end
 
+  #--------------------------------------------------------------------------
+  # * NEW Finalize Opacity Ease (used by ease_opacity ease)
+  #--------------------------------------------------------------------------
+  def ease_opacity_complete(ease_obj)
+    @easing = false
+  end
 
-	def ease_opacity_update(ease_obj)
-		@opacity = ease_obj.target[:opacity]
-	end
+  #--------------------------------------------------------------------------
+  # * NEW Check If Easing?
+  #--------------------------------------------------------------------------
+  def easing?
+    @easing
+  end
 
-	def ease_opacity_complete(ease_obj)
-		@easing = false
-	end
-
-	def easing?
-		@easing
-	end
-
-	#--------------------------------------------------------------------------
+  #--------------------------------------------------------------------------
   # * OVERWRITE Frame Update
   #--------------------------------------------------------------------------
   def update
@@ -870,8 +957,9 @@ end
 #==============================================================================
 # ** Game_Picture EXTENSION
 #------------------------------------------------------------------------------
-# Version: 1.0.0
-# Author: Galenmereth / Tor Damian Design
+# Version:  1.0.1
+# Date:     08/12/2013
+# Author:   Galenmereth / Tor Damian Design
 #
 # Extended for: TDD Easing Script
 # ===============================
