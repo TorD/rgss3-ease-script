@@ -1,6 +1,5 @@
 #==============================================================================
-# ** Game_CharacterBase
- EXTENSION
+# ** Game_CharacterBase EXTENSION
 #------------------------------------------------------------------------------
 # Version: 1.0.0
 # Author: Galenmereth / Tor Damian Design
@@ -49,7 +48,7 @@ class Game_CharacterBase
 			x: x,
 			y: y
 		}
-		Ease.to(easing_container, duration, target_attributes, {
+		TDD::Ease.to(easing_container, duration, target_attributes, {
 			easing: easing,
 			observers: [self],
 			call_on_update: :ease_moveto_update,
@@ -58,7 +57,7 @@ class Game_CharacterBase
 	end
 
 	def ease_moveto_update(ease_obj)
-		easing_container = ease_obj[:target]
+		easing_container = ease_obj.target
 		@real_x = easing_container[:x]
 		@real_y = easing_container[:y]
 		increase_steps
@@ -76,7 +75,7 @@ class Game_CharacterBase
 		@easing = true
 		easing_container = {opacity: @opacity}
 		target_attributes = {opacity: opacity}
-		Ease.to(easing_container, duration, target_attributes, {
+		TDD::Ease.to(easing_container, duration, target_attributes, {
 			easing: easing,
 			observers: [self],
 			call_on_update: :ease_opacity_update,
@@ -86,7 +85,7 @@ class Game_CharacterBase
 
 
 	def ease_opacity_update(ease_obj)
-		@opacity = ease_obj[:target][:opacity]
+		@opacity = ease_obj.target[:opacity]
 	end
 
 	def ease_opacity_complete(ease_obj)

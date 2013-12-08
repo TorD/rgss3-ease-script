@@ -29,7 +29,7 @@ class Scene_Base
   #--------------------------------------------------------------------------
   alias_method :tdd_easing_scene_update_basic_extension, :update_basic
   def update_basic
-    Ease.update
+    TDD::Ease.update
     tdd_easing_scene_update_basic_extension
   end
 end

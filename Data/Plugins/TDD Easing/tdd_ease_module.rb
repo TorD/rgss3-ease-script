@@ -80,181 +80,158 @@
 
 $imported = {} if $imported.nil?
 $imported["TDD Easing Core"] = true
-module Ease
-  @@easings = []
-  
-  #--------------------------------------------------------------------------
-  # * Ease Parameters To Given Attribute Values
-  # Params:
-  # =======
-  # - target (Object)
-  #     An object which has the attributes listed in attributes and which 
-  #     you want to effect with an easing FROM its current values TO
-  #     the values given in the attributes hash
-  # - frames (Integer)
-  #     The amount of frames to apply the easing over
-  # - attributes (Hash)
-  #     Hash of attributes and target values for the attributes you wish to
-  #     affect on the target object
-  # - opts (Hash)
-  #     Hash of optional options:
-  #       :easing           =>  Easing method to use (default = Easing::LINEAR)
-  #       :observers        =>  Array of observer objects (default = nil)
-  #       :call_on_update   =>  Method to call on observers every update tick
-  #                             (default = false)
-  #       :call_on_complete =>  Method to call on observers when easing is
-  #                             complete (default = false)
-  # Example:
-  # ========
-  # target_obj = {:x => 0, :y => 0}
-  # target_attributes = {:x => 250, :y => 100}
-  # options = {
-  #   :easing         => Easing::BOUNCE_IN,
-  #   :observers      => [self],
-  #   :call_on_update => :update (can also be writtens as "update")
-  # }
-  # Ease.to(target_obj, 60, target_attributes, opts)
-  # 
-  # This would ease the movement of target_object from 0x and 0y to 250x and
-  # 100y over 60 frames (1 second) using the Easing::BOUNCE_IN easing method.
-  # Every easing update (each frame) would call the method update on the
-  # observer objects (self, in this case).
-  #
-  # Comments:
-  # =========
-  # Depending on how your objects or classes are set up, you may need to use
-  # an "intermediary" object (like the target_obj hash in the example) to
-  # hold the attributes, then apply the values form this "intermediary" object
-  # to the attributes of the class when the :call_on_update method is called.
-  # The reason for this is that you may not necessarily want the easing
-  # function to write directly to a caller class. Look at the Game_Picture
-  # extension for an example of this necessity, where I didn't want to make
-  # any of the read-only attributes writable to implement easing.
-  #--------------------------------------------------------------------------
-  def self.to(target, frames, attributes={}, opts={})
-    register_ease(:to, target, frames, attributes, opts)
-  end
-
-  #--------------------------------------------------------------------------
-  # * Ease Parameters From Given Attribute Values To Current Attribute Values
-  # Params:
-  # =======
-  # - target (Object)
-  #     An object which has the attributes listed in attributes and which 
-  #     you want to effect with an easing FROM its current values TO
-  #     the values given in the attributes hash
-  # - frames (Integer)
-  #     The amount of frames to apply the easing over
-  # - attributes (Hash)
-  #     Hash of attributes and target values for the attributes you wish to
-  #     affect on the target object
-  # - opts (Hash)
-  #     Hash of optional options:
-  #       :easing           =>  Easing method to use (default = Easing::LINEAR)
-  #       :observers        =>  Array of observer objects (default = nil)
-  #       :call_on_update   =>  Method to call on observers every update tick
-  #                             (default = false)
-  #       :call_on_complete =>  Method to call on observers when easing is
-  #                             complete (default = false)
-  # Example:
-  # ========
-  # target_obj = {:x => 0, :y => 0}
-  # origin_attributes = {:x => 250, :y => 100}
-  # options = {
-  #   :easing         => Easing::BOUNCE_IN,
-  #   :observers      => [self],
-  #   :call_on_update => :update (can also be writtens as "update")
-  # }
-  # Ease.to(target_obj, 60, origin_attributes, opts)
-  # 
-  # This would ease the movement of target_object from 250x and 100y to 0x and
-  # 0y over 60 frames (1 second) using the Easing::BOUNCE_IN easing method.
-  # Every easing update (each frame) would call the method update on the
-  # observer objects (self, in this case).
-  #
-  # You might scratch your head and wonder "well, gosh, what's the point of this
-  # when we already have the to method?"
-  # This method is useful in instances where it's easier or more convenient to place
-  # an object where you want it to end up, then set it to ease from an origin
-  # point.
-  #
-  # Comments:
-  # =========
-  # Look at comments for the "to" method
-  #--------------------------------------------------------------------------
-  def self.from(target, frames, attributes={}, opts={})
-    register_ease(:from, target, frames, attributes, opts)
-  end
-
-  #--------------------------------------------------------------------------
-  # * Updates All Easings Every Engine Frame Tick
-  #
-  # Comments:
-  # =========
-  # Called by Scene_Base when the extension is in place for it.
-  #--------------------------------------------------------------------------
-  def self.update
-    @@easings.each_with_index do |ease, index|
-      target = ease[:target]
-      ease[:attributes].each_pair do |attribute, value|
-        attribute_origin = ease[:attributes_origin][attribute]
-        case ease[:method]
-        when :to
-          from = attribute_origin
-          to = value
-        when :from
-          from = value
-          to = attribute_origin
-        end
-        # Move instantly if frames is 1
-        if ease[:frames] == 1
-          target[attribute] = to
-        else
-          target[attribute] = Easing.send(ease[:easing], ease[:frame], from, to - from, ease[:frames])
-        end
-      end
-
-      ease[:observers].each{|o| o.send(ease[:call_on_update], ease)} if ease[:call_on_update]
-
-      ease[:frame] += 1
-      if ease[:frame] > ease[:frames]
-        @@easings.delete_at(index)
-        ease[:observers].each{|o| o.send(ease[:call_on_complete], ease)} if ease[:call_on_complete]
-      end
+module TDD
+  module Ease
+    @@easings = []
+    
+    #--------------------------------------------------------------------------
+    # * Ease Parameters To Given Attribute Values
+    # Params:
+    # =======
+    # - target (Object)
+    #     An object which has the attributes listed in attributes and which 
+    #     you want to effect with an easing FROM its current values TO
+    #     the values given in the attributes hash
+    # - frames (Integer)
+    #     The amount of frames to apply the easing over
+    # - attributes (Hash)
+    #     Hash of attributes and target values for the attributes you wish to
+    #     affect on the target object
+    # - options (Hash)
+    #     Hash of optional options:
+    #       :easing           =>  Easing method to use (default = Easing::LINEAR)
+    #       :observers        =>  Array of observer objects (default = nil)
+    #       :call_on_update   =>  Method to call on observers every update tick
+    #                             (default = false)
+    #       :call_on_complete =>  Method to call on observers when easing is
+    #                             complete (default = false)
+    # Example:
+    # ========
+    # target_obj = {:x => 0, :y => 0}
+    # target_attributes = {:x => 250, :y => 100}
+    # options = {
+    #   :easing         => Easing::BOUNCE_IN,
+    #   :observers      => [self],
+    #   :call_on_update => :update (can also be writtens as "update")
+    # }
+    # TDD::Ease.to(target_obj, 60, target_attributes, options)
+    # 
+    # This would ease the movement of target_object from 0x and 0y to 250x and
+    # 100y over 60 frames (1 second) using the Easing::BOUNCE_IN easing method.
+    # Every easing update (each frame) would call the method update on the
+    # observer objects (self, in this case).
+    #
+    # Comments:
+    # =========
+    # Depending on how your objects or classes are set up, you may need to use
+    # an "intermediary" object (like the target_obj hash in the example) to
+    # hold the attributes, then apply the values form this "intermediary" object
+    # to the attributes of the class when the :call_on_update method is called.
+    # The reason for this is that you may not necessarily want the easing
+    # function to write directly to a caller class. Look at the Game_Picture
+    # extension for an example of this necessity, where I didn't want to make
+    # any of the read-only attributes writable to implement easing.
+    #--------------------------------------------------------------------------
+    def self.to(target, frames, attributes={}, options={})
+      register_ease(:to, target, frames, attributes, options)
     end
-  end
 
-  private
-  #--------------------------------------------------------------------------
-  # * Register An Ease Object in Queue
-  #--------------------------------------------------------------------------
-  def self.register_ease(method, target, frames, attributes, opts)
-    attributes_origin = {}
-    attributes.each_pair do |attr, value|
-      case method
-      when :to
-        attributes_origin[attr] = target[attr]
-      when :from
-        attributes_origin[attr] = value
-        attributes[attr] = target[attr]
+    #--------------------------------------------------------------------------
+    # * Ease Parameters From Given Attribute Values To Current Attribute Values
+    # Params:
+    # =======
+    # - target (Object)
+    #     An object which has the attributes listed in attributes and which 
+    #     you want to effect with an easing FROM its current values TO
+    #     the values given in the attributes hash
+    # - frames (Integer)
+    #     The amount of frames to apply the easing over
+    # - attributes (Hash)
+    #     Hash of attributes and target values for the attributes you wish to
+    #     affect on the target object
+    # - options (Hash)
+    #     Hash of optional options:
+    #       :easing           =>  Easing method to use (default = Easing::LINEAR)
+    #       :observers        =>  Array of observer objects (default = nil)
+    #       :call_on_update   =>  Method to call on observers every update tick
+    #                             (default = false)
+    #       :call_on_complete =>  Method to call on observers when easing is
+    #                             complete (default = false)
+    # Example:
+    # ========
+    # target_obj = {:x => 0, :y => 0}
+    # origin_attributes = {:x => 250, :y => 100}
+    # options = {
+    #   :easing         => Easing::BOUNCE_IN,
+    #   :observers      => [self],
+    #   :call_on_update => :update (can also be writtens as "update")
+    # }
+    # TDD::Ease.to(target_obj, 60, origin_attributes, options)
+    # 
+    # This would ease the movement of target_object from 250x and 100y to 0x and
+    # 0y over 60 frames (1 second) using the Easing::BOUNCE_IN easing method.
+    # Every easing update (each frame) would call the method update on the
+    # observer objects (self, in this case).
+    #
+    # You might scratch your head and wonder "well, gosh, what's the point of this
+    # when we already have the to method?"
+    # This method is useful in instances where it's easier or more convenient to place
+    # an object where you want it to end up, then set it to ease from an origin
+    # point.
+    #
+    # Comments:
+    # =========
+    # Look at comments for the "to" method
+    #--------------------------------------------------------------------------
+    def self.from(target, frames, attributes={}, options={})
+      register_ease(:from, target, frames, attributes, options)
+    end
+
+    #--------------------------------------------------------------------------
+    # * Updates All Easings Every Engine Frame Tick
+    #
+    # Comments:
+    # =========
+    # Called by Scene_Base when the extension is in place for it.
+    #--------------------------------------------------------------------------
+    def self.update
+      @@easings.each_with_index do |ease, index|
+        target = ease.target
+        ease.attributes.each_pair do |attribute, value|
+          attribute_origin = ease.attributes_origin[attribute]
+          case ease.method
+          when :to
+            from = attribute_origin
+            to = value
+          when :from
+            from = value
+            to = attribute_origin
+          end
+          # Move instantly if frames is 1
+          if ease.frames == 1
+            target[attribute] = to
+          else
+            target[attribute] = Easing.send(ease.easing, ease.frame, from, to - from, ease.frames)
+          end
+        end
+
+        ease.observers.each{|o| o.send(ease.call_on_update, ease)} if ease.call_on_update
+
+        ease.frame += 1
+        if ease.frame > ease.frames
+          @@easings.delete_at(index)
+          ease.observers.each{|o| o.send(ease.call_on_complete, ease)} if ease.call_on_complete
+        end
       end
     end
 
-    ease_obj = {
-      :target => target,
-      :attributes => attributes,
-      :attributes_origin => attributes_origin,
-      :method => method,
-      :frame => 0,
-      :frames => frames,
-      # Default options for opts follow
-      :easing => Easing::LINEAR,
-      :observers => [],
-      :call_on_update => false,
-      :call_on_complete => false
-    }.merge(opts)
+    private
+    #--------------------------------------------------------------------------
+    # * Register An Ease Object in Queue
+    #--------------------------------------------------------------------------
+    def self.register_ease(method, target, frames, attributes, options)
+      @@easings << TDD::Ease_Object.new(method, target, frames, attributes, options)
+    end
 
-    @@easings << ease_obj
   end
-
 end

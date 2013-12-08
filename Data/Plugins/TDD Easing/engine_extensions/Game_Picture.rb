@@ -64,7 +64,7 @@ class Game_Picture
       target_attributes[attr] = eval(attr)
     end
     puts @easing_method
-    Ease.to(easing_container, duration, target_attributes, {
+    TDD::Ease.to(easing_container, duration, target_attributes, {
       :easing => @@easing_method,
       :observers => [self],
       :call_on_update => :update_move
@@ -85,7 +85,7 @@ class Game_Picture
       target_attributes[attr] = @tone_target.send(attr)
     end
 
-    Ease.to(easing_container, duration, target_attributes, {
+    TDD::Ease.to(easing_container, duration, target_attributes, {
       :easing => @@easing_method,
       :observers => [self],
       :call_on_update => :update_tone_change
@@ -129,7 +129,7 @@ class Game_Picture
       tdd_easing_update_move_extension
       return
     end
-    easing_container = ease_obj[:target]
+    easing_container = ease_obj.target
     @@easing_move_attributes.each do |attr|
       instance_variable_set("@#{attr}", easing_container[attr])
     end
@@ -148,7 +148,7 @@ class Game_Picture
       tdd_easing_update_tone_change_extension
       return
     end
-    easing_container = ease_obj[:target]
+    easing_container = ease_obj.target
     @@easing_tint_attributes.each do |attr|
       @tone.send("#{attr}=", easing_container[attr])
     end
