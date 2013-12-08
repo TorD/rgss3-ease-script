@@ -29,6 +29,12 @@ $imported["TDD Easing Core<-Game_CharacterBase"] = true
 
 class Game_CharacterBase
 	@easing = false
+
+	def ease_moveto_char(char, duration, easing = :linear)
+		char = @interpreter.get_character(char)
+		ease_moveto(char.x, char.y, duration, easing)
+	end
+
 	def ease_moveto(x, y, duration, easing = :linear)
 		x = @real_x + x.to_i if x.is_a? String
 		y = @real_y + y.to_i if y.is_a? String
