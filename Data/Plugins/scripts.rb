@@ -722,7 +722,7 @@ class Scene_Base
   end
 end
 #==============================================================================
-# ** Game_Picture EXTENSION
+# ** Game_CharacterBase EXTENSION
 #------------------------------------------------------------------------------
 # Version: 1.0.0
 # Author: Galenmereth / Tor Damian Design
@@ -752,9 +752,10 @@ $imported["TDD Easing Core<-Game_CharacterBase"] = true
 
 class Game_CharacterBase
 	@easing = false
-	def ease_moveto_char(event_id, duration, easing = :linear)
-		event = @interpreter.get_character(event_id)
-		ease_moveto(event.x, event.y, duration, easing)
+
+	def ease_moveto_char(char, duration, easing = :linear)
+		char = @interpreter.get_character(char)
+		ease_moveto(char.x, char.y, duration, easing)
 	end
 
 	def ease_moveto(x, y, duration, easing = :linear)

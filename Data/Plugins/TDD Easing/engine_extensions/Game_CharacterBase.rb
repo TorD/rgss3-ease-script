@@ -1,5 +1,6 @@
 #==============================================================================
-# ** Game_Picture EXTENSION
+# ** Game_CharacterBase
+ EXTENSION
 #------------------------------------------------------------------------------
 # Version: 1.0.0
 # Author: Galenmereth / Tor Damian Design
@@ -83,6 +84,7 @@ class Game_CharacterBase
 			})
 	end
 
+
 	def ease_opacity_update(ease_obj)
 		@opacity = ease_obj[:target][:opacity]
 	end
@@ -104,4 +106,5 @@ class Game_CharacterBase
     return update_move if moving? && !easing?
     return update_stop
   end
+
 end
