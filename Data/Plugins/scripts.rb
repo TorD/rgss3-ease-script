@@ -243,16 +243,14 @@ end
 #==============================================================================
 # ** TDD Ease Object
 #------------------------------------------------------------------------------
-# Version:  1.0.1
+# Version:  1.0.0
 # Date:     08/12/2013
 # Author:   Galenmereth / Tor Damian Design
 # 
 # Description
 # ===========
-# This module is used to apply an easing algorithm to an object's parameters
-# over X amount of frames. Easing methods can be extended through adding
-# static methods to the Easing module. The default easing method is
-# Easing::LINEAR and is identical to the default easing provided in VXAce
+# This object is used to store the easing info for each active ease in the
+# system
 # 
 # Credit:
 # =======
@@ -882,8 +880,10 @@ class Game_CharacterBase
   # * NEW Ease To Opacity
   # Params:
   # =======
-  # - opacity (integer)
-  #     Target opacity to ease to
+  # - opacity (integer or "string")
+  #     Target opacity to ease to. If string, then relative to current opacity
+  #     value. See ease_moveto's x param for more on how to use relative
+  #     string values.
   # - frames (integer)
   #     How many frames the easing should last for
   #  - easing (:symbol or "string")

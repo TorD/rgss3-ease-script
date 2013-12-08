@@ -92,8 +92,10 @@ class Game_CharacterBase
   # * NEW Ease To Opacity
   # Params:
   # =======
-  # - opacity (integer)
-  #     Target opacity to ease to
+  # - opacity (integer or "string")
+  #     Target opacity to ease to. If string, then relative to current opacity
+  #     value. See ease_moveto's x param for more on how to use relative
+  #     string values.
   # - frames (integer)
   #     How many frames the easing should last for
   #  - easing (:symbol or "string")
