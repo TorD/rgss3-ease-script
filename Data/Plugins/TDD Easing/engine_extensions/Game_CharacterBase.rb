@@ -30,6 +30,8 @@ $imported["TDD Easing Core<-Game_CharacterBase"] = true
 class Game_CharacterBase
 	@easing = false
 	def ease_moveto(x, y, duration, easing = :linear)
+		x = @real_x + x.to_i if x.is_a? String
+		y = @real_y + y.to_i if y.is_a? String
 		@wait_count = duration - 1
 		@easing = true
 		easing_container = {
@@ -62,6 +64,7 @@ class Game_CharacterBase
 	end
 
 	def ease_opacity(opacity, duration, easing = :linear)
+		opacity = @opacity + opacity.to_i if opacity.is_a? String
 		@wait_count = duration - 1
 		@easing = true
 		easing_container = {opacity: @opacity}
