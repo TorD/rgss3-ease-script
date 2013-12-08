@@ -20,16 +20,16 @@
 # description area unless you change the script completely. Thank you.
 #==============================================================================
 class Scene_Base
-	#--------------------------------------------------------------------------
+  #--------------------------------------------------------------------------
   # * ALIAS Frame Update
   # Comments:
-  # 	Ease.update is called first so that the actual drawing performed by the
-  # 	original update_basic calls are performed after attributes have been
-  # 	set by active easing procedures.
+  #   Ease.update is called first so that the actual drawing performed by the
+  #   original update_basic calls are performed after attributes have been
+  #   set by active easing procedures.
   #--------------------------------------------------------------------------
-	alias_method :tdd_easing_scene_update_basic_extension, :update_basic
-	def update_basic
-		Ease.update
-		tdd_easing_scene_update_basic_extension
-	end
+  alias_method :tdd_easing_scene_update_basic_extension, :update_basic
+  def update_basic
+    Ease.update
+    tdd_easing_scene_update_basic_extension
+  end
 end

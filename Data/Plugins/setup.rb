@@ -13,15 +13,15 @@ BOOTSTRAP_FILE = "bootstrap.rb"
 load_script "#{ROOT_PATH}/plugins_module.rb"
 
 # REQUIRED: We set the above settings in the Plugins module
-Plugins.root_path = ROOT_PATH 										
+Plugins.root_path = ROOT_PATH                     
 Plugins.bootstrap_file = BOOTSTRAP_FILE
 
 # REQUIRED: We load all the plugins found in the ROOT_PATH folder. The :order param includes the above specified PRIORITY_PLUGINS array.
 # If you don't have any need for prioritizing plugins, simply call it without any params, like the line commented out below
 # Plugins.load_plugins
 Plugins.load_plugins(
-	:path => "*",
-	:order => PRIORITY_PLUGINS)
+  :path => "*",
+  :order => PRIORITY_PLUGINS)
 
 Plugins.package
 
