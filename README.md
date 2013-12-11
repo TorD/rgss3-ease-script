@@ -1,4 +1,6 @@
 RGSS3 - TDD Ease Script
 =======================
 
-This demo uses the TDD Plugins Module, currently under development. You can find it and all script files related to the Easing module in Data/Plugins. The scripts in the actual project file are used only to load the Plugin module.
+This repository contains a demo project for RPG Maker VXAce, and all scripts related to the TDD Ease Script. These scripts can be found in: Data/Plugins/TDD Easing.
+
+This project uses the TDD Plugin Script Framework to compile all the individual scripts upon testing the game, into one file found in Data/Plugins/scripts.rb.
