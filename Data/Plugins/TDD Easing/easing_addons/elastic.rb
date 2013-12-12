@@ -31,6 +31,7 @@ module Easing
 
   def self.elastic_in(t, b, c, d)
     d=d.to_f
+    c=c.to_f
     s=1.70158
     p=0
     a=c
@@ -48,6 +49,7 @@ module Easing
 
   def self.elastic_out(t, b, c, d)
     d=d.to_f
+    c=c.to_f
     s=1.70158
     p=0
     a=c
@@ -65,6 +67,7 @@ module Easing
 
   def self.elastic_in_out(t, b, c, d)
     d=d.to_f
+    c=c.to_f
     s=1.70158
     p=0
     a=c

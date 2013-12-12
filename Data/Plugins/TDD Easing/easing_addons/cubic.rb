@@ -41,6 +41,7 @@ module Easing
   end
 
   def self.cubic_in_out(t, b, c, d)
+    c = c.to_f
     t /= d.to_f/2
     return c/2*t*t*t + b if t < 1
     t -= 2

@@ -38,6 +38,7 @@ module Easing
   end
 
   def self.expo_in_out(t, b, c, d)
+    c = c.to_f
     d = d.to_f
     return b if t==0
     return b+c if t==d

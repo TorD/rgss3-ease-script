@@ -370,6 +370,7 @@ module Easing
 
   def self.back_in_out(t, b, c, d)
     s = SLING
+    c = c.to_f
     d = d.to_f
     if ((t/=d/2) < 1)
       return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b
@@ -474,6 +475,7 @@ module Easing
 
   def self.circ_in_out(t, b, c, d)
     d = d.to_f
+    c = c.to_f
     if (t/=d/2) < 1
       return -c/2 * (Math.sqrt(1 - t*t) - 1) + b
     else
@@ -524,6 +526,7 @@ module Easing
   end
 
   def self.cubic_in_out(t, b, c, d)
+    c = c.to_f
     t /= d.to_f/2
     return c/2*t*t*t + b if t < 1
     t -= 2
@@ -563,6 +566,7 @@ module Easing
 
   def self.elastic_in(t, b, c, d)
     d=d.to_f
+    c=c.to_f
     s=1.70158
     p=0
     a=c
@@ -580,6 +584,7 @@ module Easing
 
   def self.elastic_out(t, b, c, d)
     d=d.to_f
+    c=c.to_f
     s=1.70158
     p=0
     a=c
@@ -597,6 +602,7 @@ module Easing
 
   def self.elastic_in_out(t, b, c, d)
     d=d.to_f
+    c=c.to_f
     s=1.70158
     p=0
     a=c
@@ -655,6 +661,7 @@ module Easing
   end
 
   def self.expo_in_out(t, b, c, d)
+    c = c.to_f
     d = d.to_f
     return b if t==0
     return b+c if t==d
@@ -729,21 +736,23 @@ end
 # description area unless you change the script completely. Thank you.
 #==============================================================================
 module Easing
-  QUAD_IN       = "quad_ease_in"
-  QUAD_OUT      = "quad_ease_out"
-  QUAD_IN_OUT   = "quad_ease_in_out"
+  QUAD_IN       = "quad_in"
+  QUAD_OUT      = "quad_out"
+  QUAD_IN_OUT   = "quad_in_out"
 
-  def self.quad_ease_in(t, b, c, d)
+  def self.quad_in(t, b, c, d)
     t /= d.to_f
     return c*t*t + b
   end
 
-  def self.quad_ease_out(t, b, c, d)
+  def self.quad_out(t, b, c, d)
+    c = c.to_f
     t /= d.to_f
     return -c * t*(t-2) + b;
   end
 
-  def self.quad_ease_in_out(t, b, c, d)
+  def self.quad_in_out(t, b, c, d)
+    c = c.to_f
     t /= d.to_f/2
     return c/2*t*t + b if t < 1
     t -= 1

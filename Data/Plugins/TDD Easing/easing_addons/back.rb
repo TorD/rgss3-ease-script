@@ -46,6 +46,7 @@ module Easing
 
   def self.back_in_out(t, b, c, d)
     s = SLING
+    c = c.to_f
     d = d.to_f
     if ((t/=d/2) < 1)
       return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b

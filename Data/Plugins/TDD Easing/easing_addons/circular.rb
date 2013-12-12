@@ -39,6 +39,7 @@ module Easing
 
   def self.circ_in_out(t, b, c, d)
     d = d.to_f
+    c = c.to_f
     if (t/=d/2) < 1
       return -c/2 * (Math.sqrt(1 - t*t) - 1) + b
     else
