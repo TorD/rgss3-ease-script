@@ -119,10 +119,13 @@ class Game_CharacterBase
   # * NEW Update Display Position (used by ease_moveto ease)
   #--------------------------------------------------------------------------
   def ease_moveto_update(ease_obj)
+    last_real_x = @real_x
+    last_real_y = @real_y
     easing_container = ease_obj.target
     @real_x = easing_container[:x]
     @real_y = easing_container[:y]
     increase_steps
+    update_scroll(last_real_x, last_real_y) if self.instance_of? Game_Player
   end
 
   #--------------------------------------------------------------------------
