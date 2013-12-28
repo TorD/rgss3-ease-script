@@ -64,7 +64,6 @@ class Game_Picture
       easing_container[attr] = instance_variable_get("@#{attr}")
       target_attributes[attr] = eval(attr)
     end
-    puts @easing_method
     TDD::Ease.to(easing_container, duration, target_attributes, {
       :easing => @@easing_method,
       :observers => [self],
