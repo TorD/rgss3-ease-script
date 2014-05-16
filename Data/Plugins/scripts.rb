@@ -798,8 +798,8 @@ end
 #==============================================================================
 # ** Game_CharacterBase EXTENSION
 #------------------------------------------------------------------------------
-# Version:  1.0.1
-# Date:     08/12/2013
+# Version:  1.0.2
+# Date:     05/16/2014
 # Author:   Galenmereth / Tor Damian Design
 #
 # Extended for: TDD Easing Script
@@ -963,6 +963,9 @@ class Game_CharacterBase
     return update_jump if jumping?
     return update_move if moving? && !easing?
     return update_stop
+
+    # Compatibility with Victor Engine Light Script
+    update_lantern if self.respond_to?("update_lantern")
   end
 
 end
@@ -1032,7 +1035,6 @@ class Game_Picture
       easing_container[attr] = instance_variable_get("@#{attr}")
       target_attributes[attr] = eval(attr)
     end
-    puts @easing_method
     TDD::Ease.to(easing_container, duration, target_attributes, {
       :easing => @@easing_method,
       :observers => [self],
