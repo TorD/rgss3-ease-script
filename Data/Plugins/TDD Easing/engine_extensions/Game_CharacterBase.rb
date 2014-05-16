@@ -1,8 +1,8 @@
 #==============================================================================
 # ** Game_CharacterBase EXTENSION
 #------------------------------------------------------------------------------
-# Version:  1.0.1
-# Date:     08/12/2013
+# Version:  1.0.2
+# Date:     05/16/2014
 # Author:   Galenmereth / Tor Damian Design
 #
 # Extended for: TDD Easing Script
