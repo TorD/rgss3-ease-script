@@ -166,6 +166,9 @@ class Game_CharacterBase
     return update_jump if jumping?
     return update_move if moving? && !easing?
     return update_stop
+
+    # Compatibility with Victor Engine Light Script
+    update_lantern if self.respond_to?("update_lantern")
   end
 
 end
