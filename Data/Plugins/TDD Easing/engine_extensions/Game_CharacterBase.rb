@@ -159,16 +159,20 @@ class Game_CharacterBase
   end
 
   #--------------------------------------------------------------------------
+  # * ALIAS Moving?
+  #--------------------------------------------------------------------------
+  alias :tdd_easing_moving? :moving?
+  def moving?
+    return easing? ? false : tdd_easing_moving?
+  end
+  #--------------------------------------------------------------------------
   # * OVERWRITE Frame Update
   #--------------------------------------------------------------------------
   def update
     update_animation
     return update_jump if jumping?
-    return update_move if moving? && !easing?
+    return update_move if moving?
     return update_stop
-
-    # Compatibility with Victor Engine Light Script
-    update_lantern if self.respond_to?("update_lantern")
   end
 
 end
