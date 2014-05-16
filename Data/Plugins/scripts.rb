@@ -962,15 +962,6 @@ class Game_CharacterBase
   def moving?
     return easing? ? false : tdd_easing_moving?
   end
-  #--------------------------------------------------------------------------
-  # * OVERWRITE Frame Update
-  #--------------------------------------------------------------------------
-  def update
-    update_animation
-    return update_jump if jumping?
-    return update_move if moving?
-    return update_stop
-  end
 
 end
 #==============================================================================
