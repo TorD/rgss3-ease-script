@@ -1,8 +1,8 @@
 #==============================================================================
 # ** TDD Ease Object
 #------------------------------------------------------------------------------
-# Version:  1.0.0
-# Date:     08/12/2013
+# Version:  1.0.1
+# Date:     07/30/2014
 # Author:   Galenmereth / Tor Damian Design
 # 
 # Description
@@ -47,7 +47,7 @@ module TDD
         when :to
           @attributes_origin[attr] = target[attr]
         when :from
-          @attributes_origin[attr] = value
+          @attributes_origin[attr] = val
           attributes[attr] = target[attr]
         end
       end
