@@ -1,8 +1,8 @@
 #==============================================================================
 # ** Game_CharacterBase EXTENSION
 #------------------------------------------------------------------------------
-# Version:  1.0.2
-# Date:     05/16/2014
+# Version:  1.0.3
+# Date:     07/31/2014
 # Author:   Galenmereth / Tor Damian Design
 #
 # Extended for: TDD Easing Script
@@ -29,6 +29,7 @@ raise "You need the TDD Easing Script to use this extension!" unless  $imported[
 $imported["TDD Easing Core<-Game_CharacterBase"] = true
 
 class Game_CharacterBase
+  @@interpreter = Game_Interpreter.new
   @easing = false
   #--------------------------------------------------------------------------
   # * NEW Move Character To Other Character
@@ -45,7 +46,7 @@ class Game_CharacterBase
   #     The easing method to apply. Default is :linear
   #--------------------------------------------------------------------------
   def ease_moveto_char(char, frames, easing = :linear)
-    char = @interpreter.get_character(char)
+    char = @@interpreter.get_character(char)
     ease_moveto(char.x, char.y, frames, easing)
   end
 
