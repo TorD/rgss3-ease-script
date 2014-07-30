@@ -289,7 +289,7 @@ module TDD
         when :to
           @attributes_origin[attr] = target[attr]
         when :from
-          @attributes_origin[attr] = value
+          @attributes_origin[attr] = val
           attributes[attr] = target[attr]
         end
       end
