@@ -1,12 +1,13 @@
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
-# Version:  1.0.1
-# Date:     08/12/2013
+# Version:  1.0.2
+# Date:     07/31/2014
 # Author:   Galenmereth / Tor Damian Design
 #
 # Changelog
 # =========
+# 07/31/2014 - Fixed @interpreter bug in Game_CharacterBase extension
 # Introduced the TDD module namespace and Ease_Object instead of using a hash
 # 
 # Description
