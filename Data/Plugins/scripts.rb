@@ -1,12 +1,13 @@
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
-# Version:  1.0.1
-# Date:     08/12/2013
+# Version:  1.0.3
+# Date:     07/31/2014
 # Author:   Galenmereth / Tor Damian Design
 #
 # Changelog
 # =========
+# 07/31/2014 - Fixed @interpreter bug in Game_CharacterBase extension
 # Introduced the TDD module namespace and Ease_Object instead of using a hash
 # 
 # Description
@@ -243,10 +244,14 @@ end
 #==============================================================================
 # ** TDD Ease Object
 #------------------------------------------------------------------------------
-# Version:  1.0.1
-# Date:     07/30/2014
+# Version:  1.0.2
+# Date:     11/09/2014
 # Author:   Galenmereth / Tor Damian Design
 # 
+# Changelog
+# =========
+# 1.0.2 - :from now works as intended. Fixed attribute origin setting to remove
+#         method check, since that is done in the easing module already.
 # Description
 # ===========
 # This object is used to store the easing info for each active ease in the
@@ -282,16 +287,10 @@ module TDD
       # Current frame starts at 0
       @frame = 0
 
-      # Set origin of attributes for ease depending on method
+      # Set origin of attributes for ease
       @attributes_origin = {}
       @attributes.each_pair do |attr, val|
-        case method
-        when :to
-          @attributes_origin[attr] = target[attr]
-        when :from
-          @attributes_origin[attr] = val
-          attributes[attr] = target[attr]
-        end
+        @attributes_origin[attr] = target[attr]
       end
     end
 

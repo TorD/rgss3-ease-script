@@ -1,14 +1,17 @@
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
-# Version:  1.0.3
-# Date:     07/31/2014
+# Version:  1.0.4
+# Date:     11/09/2014
 # Author:   Galenmereth / Tor Damian Design
 #
 # Changelog
 # =========
-# 07/31/2014 - Fixed @interpreter bug in Game_CharacterBase extension
-# Introduced the TDD module namespace and Ease_Object instead of using a hash
+# 1.0.4   TDD Ease Object updated. :from now works as intended. Fixed attribute
+#         origin setting to remove method check, since that is done in the 
+#         easing module already.
+# 1.0.3   Fixed @interpreter bug in Game_CharacterBase extension
+# 1.0.2   Introduced the TDD module namespace and Ease_Object instead of using a hash
 # 
 # Description
 # ===========
@@ -33,7 +36,7 @@
 # You can provide different easing methods for different events as well, by
 # setting Game_Picture.easing between each call. It is remembered for each
 # event call the moment it starts.
-#
+# 
 # If you wish to set the default easing, you use:
 #   Game_Picture.easing_default = Easing::QUAD_IN
 #
