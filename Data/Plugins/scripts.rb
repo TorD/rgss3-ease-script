@@ -1,14 +1,19 @@
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
-# Version:  1.0.3
-# Date:     07/31/2014
+# Version:  1.0.5
+# Date:     11/09/2014
 # Author:   Galenmereth / Tor Damian Design
 #
 # Changelog
 # =========
-# 07/31/2014 - Fixed @interpreter bug in Game_CharacterBase extension
-# Introduced the TDD module namespace and Ease_Object instead of using a hash
+# 1.0.5   Added support for a delay in options hash. This makes the easing wait
+#         the specified x amount of frames before starting.
+# 1.0.4   TDD Ease Object updated. :from now works as intended. Fixed attribute
+#         origin setting to remove method check, since that is done in the 
+#         easing module already.
+# 1.0.3   Fixed @interpreter bug in Game_CharacterBase extension
+# 1.0.2   Introduced the TDD module namespace and Ease_Object instead of using a hash
 # 
 # Description
 # ===========
@@ -33,7 +38,7 @@
 # You can provide different easing methods for different events as well, by
 # setting Game_Picture.easing between each call. It is remembered for each
 # event call the moment it starts.
-#
+# 
 # If you wish to set the default easing, you use:
 #   Game_Picture.easing_default = Easing::QUAD_IN
 #
@@ -201,7 +206,13 @@ module TDD
     # Called by Scene_Base when the extension is in place for it.
     #--------------------------------------------------------------------------
     def self.update
-      @@easings.each_with_index do |ease, index|
+      @@easings.each do |ease|
+        # Skip to wait for delay option if present
+        if ease.delay && ease.delay > 0
+          ease.delay -= 1
+          next
+        end
+
         target = ease.target
         ease.attributes.each_pair do |attribute, value|
           attribute_origin = ease.attributes_origin[attribute]
@@ -225,13 +236,12 @@ module TDD
 
         ease.frame += 1
         if ease.frame > ease.frames
-          @@easings.delete_at(index)
+          @@easings.delete(ease)
           ease.observers.each{|o| o.send(ease.call_on_complete, ease)} if ease.call_on_complete
         end
       end
     end
 
-    private
     #--------------------------------------------------------------------------
     # * Register An Ease Object in Queue
     #--------------------------------------------------------------------------
@@ -244,12 +254,13 @@ end
 #==============================================================================
 # ** TDD Ease Object
 #------------------------------------------------------------------------------
-# Version:  1.0.2
+# Version:  1.0.3
 # Date:     11/09/2014
 # Author:   Galenmereth / Tor Damian Design
 # 
 # Changelog
 # =========
+# 1.0.3 - Added delay access method
 # 1.0.2 - :from now works as intended. Fixed attribute origin setting to remove
 #         method check, since that is done in the easing module already.
 # Description
@@ -296,6 +307,14 @@ module TDD
 
     def easing
       @options[:easing]
+    end
+
+    def delay
+      @options[:delay]
+    end
+
+    def delay=(value)
+      @options[:delay] = value
     end
 
     def observers
