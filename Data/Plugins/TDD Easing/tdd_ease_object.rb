@@ -1,12 +1,13 @@
 #==============================================================================
 # ** TDD Ease Object
 #------------------------------------------------------------------------------
-# Version:  1.0.2
+# Version:  1.0.3
 # Date:     11/09/2014
 # Author:   Galenmereth / Tor Damian Design
 # 
 # Changelog
 # =========
+# 1.0.3 - Added delay access method
 # 1.0.2 - :from now works as intended. Fixed attribute origin setting to remove
 #         method check, since that is done in the easing module already.
 # Description
@@ -53,6 +54,14 @@ module TDD
 
     def easing
       @options[:easing]
+    end
+
+    def delay
+      @options[:delay]
+    end
+
+    def delay=(value)
+      @options[:delay] = value
     end
 
     def observers

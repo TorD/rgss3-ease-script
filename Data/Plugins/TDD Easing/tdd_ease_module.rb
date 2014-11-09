@@ -1,12 +1,14 @@
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
-# Version:  1.0.4
+# Version:  1.0.5
 # Date:     11/09/2014
 # Author:   Galenmereth / Tor Damian Design
 #
 # Changelog
 # =========
+# 1.0.5   Added support for a delay in options hash. This makes the easing wait
+#         the specified x amount of frames before starting.
 # 1.0.4   TDD Ease Object updated. :from now works as intended. Fixed attribute
 #         origin setting to remove method check, since that is done in the 
 #         easing module already.
@@ -204,7 +206,13 @@ module TDD
     # Called by Scene_Base when the extension is in place for it.
     #--------------------------------------------------------------------------
     def self.update
-      @@easings.each_with_index do |ease, index|
+      @@easings.each do |ease|
+        # Skip to wait for delay option if present
+        if ease.delay && ease.delay > 0
+          ease.delay -= 1
+          next
+        end
+
         target = ease.target
         ease.attributes.each_pair do |attribute, value|
           attribute_origin = ease.attributes_origin[attribute]
@@ -228,13 +236,12 @@ module TDD
 
         ease.frame += 1
         if ease.frame > ease.frames
-          @@easings.delete_at(index)
+          @@easings.delete(ease)
           ease.observers.each{|o| o.send(ease.call_on_complete, ease)} if ease.call_on_complete
         end
       end
     end
 
-    private
     #--------------------------------------------------------------------------
     # * Register An Ease Object in Queue
     #--------------------------------------------------------------------------
