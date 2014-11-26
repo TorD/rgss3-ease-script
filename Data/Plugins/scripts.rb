@@ -1,12 +1,15 @@
 #==============================================================================
 # ** TDD Ease Module
 #------------------------------------------------------------------------------
-# Version:  1.0.5
-# Date:     11/09/2014
+# Version:  1.0.6
+# Date:     11/26/2014
 # Author:   Galenmereth / Tor Damian Design
 #
 # Changelog
 # =========
+# 1.0.6   Added support to use non-Hash objects directly as targets of easing.
+#         This is fully backwards compatible. Also added documentation for
+#         the delay option.
 # 1.0.5   Added support for a delay in options hash. This makes the easing wait
 #         the specified x amount of frames before starting.
 # 1.0.4   TDD Ease Object updated. :from now works as intended. Fixed attribute
@@ -111,6 +114,7 @@ module TDD
     # - options (Hash)
     #     Hash of optional options:
     #       :easing           =>  Easing method to use (default = Easing::LINEAR)
+    #       :delay            =>  Delay (in frames) before starting the ease.
     #       :observers        =>  Array of observer objects (default = nil)
     #       :call_on_update   =>  Method to call on observers every update tick
     #                             (default = false)
@@ -163,6 +167,7 @@ module TDD
     # - options (Hash)
     #     Hash of optional options:
     #       :easing           =>  Easing method to use (default = Easing::LINEAR)
+    #       :delay            =>  Delay (in frames) before starting the ease.
     #       :observers        =>  Array of observer objects (default = nil)
     #       :call_on_update   =>  Method to call on observers every update tick
     #                             (default = false)
@@ -224,11 +229,19 @@ module TDD
             from = value
             to = attribute_origin
           end
+
           # Move instantly if frames is 1
           if ease.frames == 1
-            target[attribute] = to
+            value = to
           else
-            target[attribute] = Easing.send(ease.easing, ease.frame, from, to - from, ease.frames)
+            value = Easing.send(ease.easing, ease.frame, from, to - from, ease.frames)
+          end
+
+          # Set the attribute on the target
+          if target.is_a? Hash
+            target[attribute] = value
+          else
+            target.send("#{attribute}=", value)
           end
         end
 
@@ -254,12 +267,13 @@ end
 #==============================================================================
 # ** TDD Ease Object
 #------------------------------------------------------------------------------
-# Version:  1.0.3
+# Version:  1.0.4
 # Date:     11/09/2014
 # Author:   Galenmereth / Tor Damian Design
 # 
 # Changelog
 # =========
+# 1.0.4 - Added support for non-Hash target objects. Fully backwards compatible
 # 1.0.3 - Added delay access method
 # 1.0.2 - :from now works as intended. Fixed attribute origin setting to remove
 #         method check, since that is done in the easing module already.
@@ -301,7 +315,11 @@ module TDD
       # Set origin of attributes for ease
       @attributes_origin = {}
       @attributes.each_pair do |attr, val|
-        @attributes_origin[attr] = target[attr]
+        if target.is_a? Hash
+          @attributes_origin[attr] = target[attr]
+        else
+          @attributes_origin[attr] = target.send(attr)
+        end
       end
     end
 

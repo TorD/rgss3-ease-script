@@ -1,12 +1,13 @@
 #==============================================================================
 # ** TDD Ease Object
 #------------------------------------------------------------------------------
-# Version:  1.0.3
+# Version:  1.0.4
 # Date:     11/09/2014
 # Author:   Galenmereth / Tor Damian Design
 # 
 # Changelog
 # =========
+# 1.0.4 - Added support for non-Hash target objects. Fully backwards compatible
 # 1.0.3 - Added delay access method
 # 1.0.2 - :from now works as intended. Fixed attribute origin setting to remove
 #         method check, since that is done in the easing module already.
@@ -48,7 +49,11 @@ module TDD
       # Set origin of attributes for ease
       @attributes_origin = {}
       @attributes.each_pair do |attr, val|
-        @attributes_origin[attr] = target[attr]
+        if target.is_a? Hash
+          @attributes_origin[attr] = target[attr]
+        else
+          @attributes_origin[attr] = target.send(attr)
+        end
       end
     end
 
