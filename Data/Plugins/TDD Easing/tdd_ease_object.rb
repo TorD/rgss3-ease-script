@@ -33,8 +33,10 @@ module TDD
     attr_reader   :frames
     attr_reader   :attributes
     attr_reader   :attributes_origin
+    attr_reader   :setup_complete
 
     attr_accessor :frame
+    attr_accessor :overwrite
     
     def initialize(method, target, frames, attributes={}, options={})
       @method     = method
@@ -46,15 +48,13 @@ module TDD
       # Current frame starts at 0
       @frame = 0
 
-      # Set origin of attributes for ease
-      @attributes_origin = {}
-      @attributes.each_pair do |attr, val|
-        if target.is_a? Hash
-          @attributes_origin[attr] = target[attr]
-        else
-          @attributes_origin[attr] = target.send(attr)
-        end
-      end
+      # Set overwrite attribute
+      @overwrite = @options[:overwrite]
+
+      # Setup if no delay
+      setup if delay == 0
+
+      return self
     end
 
     def easing
@@ -62,7 +62,7 @@ module TDD
     end
 
     def delay
-      @options[:delay]
+      @options[:delay] || 0
     end
 
     def delay=(value)
@@ -81,12 +81,35 @@ module TDD
       @options[:call_on_complete]
     end
 
+    def setup
+      return if setup_complete?
+
+      # Set origin of attributes for ease
+      @attributes_origin = {}
+      @attributes.each_pair do |attr, val|
+        if target.is_a? Hash
+          @attributes_origin[attr] = target[attr]
+        else
+          @attributes_origin[attr] = target.send(attr)
+        end
+      end
+
+      # Setup complete
+      @setup_complete = true
+    end
+
+    def setup_complete?
+      @setup_complete
+    end
+
     private
     def default_options
       {
-        :easing => Easing::LINEAR,
-        :observers => [],
-        :call_on_update => false,
+        :easing           => Easing::LINEAR,
+        :observers        => [],
+        :delay            => 0,
+        :overwrite        => false,
+        :call_on_update   => false,
         :call_on_complete => false
       }
     end
