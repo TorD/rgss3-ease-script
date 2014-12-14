@@ -1,101 +1,38 @@
-#==============================================================================
-# ** TDD Ease Module
-#------------------------------------------------------------------------------
-# Version:  1.0.6
-# Date:     11/26/2014
-# Author:   Galenmereth / Tor Damian Design
-#
-# Changelog
-# =========
-# 1.0.6   Added support to use non-Hash objects directly as targets of easing.
-#         This is fully backwards compatible. Also added documentation for
-#         the delay option.
-# 1.0.5   Added support for a delay in options hash. This makes the easing wait
-#         the specified x amount of frames before starting.
-# 1.0.4   TDD Ease Object updated. :from now works as intended. Fixed attribute
-#         origin setting to remove method check, since that is done in the 
-#         easing module already.
-# 1.0.3   Fixed @interpreter bug in Game_CharacterBase extension
-# 1.0.2   Introduced the TDD module namespace and Ease_Object instead of using a hash
-# 
-# Description
-# ===========
-# This module is used to apply an easing algorithm to an object's parameters
-# over X amount of frames. Easing methods can be extended through adding
-# static methods to the Easing module. The default easing method is
-# Easing::LINEAR and is identical to the default easing provided in VXAce
-#
-# How to use in event editor:
-# ===========================
-# Included with this script is an extension to the Game_Picture class that lets
-# you change the easing method of the event editor commands Move Picture and
-# Tint Picture.
-#
-# Before calling Move Picture and Tint Picture for a picture in the event editor,
-# make a script call like this:
-#   Game_Picture.easing = Easing::ELASTIC_OUT
-# This will set the easing method to the ELASTIC_OUT algorithm. When you erase
-# any picture, the easing method is reset to the default (Easing::LINEAR by
-# default)
-#
-# You can provide different easing methods for different events as well, by
-# setting Game_Picture.easing between each call. It is remembered for each
-# event call the moment it starts.
-# 
-# If you wish to set the default easing, you use:
-#   Game_Picture.easing_default = Easing::QUAD_IN
-#
-# This is the list of included easing methods (the part that go after Easing::)
-#
-# * LINEAR (default, and like the default in VXAce)
-#
-# * BACK_IN
-# * BACK_IN_OUT
-# * BACK_OUT
-#
-# * BOUNCE_IN
-# * BOUNCE_IN_OUT
-# * BOUNCE_OUT
-#
-# * CIRC_IN
-# * CIRC_IN_OUT
-# * CIRC_OUT
-#
-# * CUBIC_IN
-# * CUBIC_IN_OUT
-# * CUBIC_OUT
-#
-# * ELASTIC_IN
-# * ELASTIC_IN_OUT
-# * ELASTIC_OUT
-#
-# * EXPO_IN
-# * EXPO_IN_OUT
-# * EXPO_OUT
-#
-# * QUAD_IN
-# * QUAD_IN_OUT
-# * QUAD_OUT
-# 
-# Credit:
-# =======
-# - Galenmereth / Tor Damian Design
-#
-# License:
-# ========
-# Free for non-commercial and commercial use. Credit greatly appreciated but
-# not required. Share script freely with everyone, but please retain this
-# description area unless you change the script completely. Thank you.
-#==============================================================================
-
-#/////////////////////////////////////////////////////////////////////////
-#// DANGER - BELOW IS ARCANE UNLESS YOU KNOW WHAT YOU'RE DOING - DANGER //
-#/////////////////////////////////////////////////////////////////////////
-
 $imported = {} if $imported.nil?
 $imported["TDD Easing Core"] = true
 module TDD
-  module Ease
+  # Summary:: This static class is used to apply an easing algorithm to an object's parameters over X amount of frames.  
+  #           Easing methods can be extended through adding static methods to the Easing module. The default easing method
+  #           is Easing::LINEAR and is identical to the default easing provided in VXAce
+  #
+  # Version:: 1.0.7
+  # Date::    12/14/2014
+  # Author::  Galenmereth / Tor Damian Design <post@tordamian.com>
+  #
+  # License:: Free for non-commercial and commercial use. Credit greatly appreciated but not required.
+  #           Share script freely with everyone, but please retain this description area unless you change
+  #           the script completely. Thank you.
+  #
+  #== Changelog
+  # 1.0.7::  * Added :overwrite option for {to}, {from} and {register_ease} called :overwrite, 
+  #            which will overwrite any other easings for the given target(s).
+  #          * Added new public method: {clear_easings_for}. See its documentation
+  #          * Moved the performing of an ease frame animation into separate method: {perform_ease_for}.
+  #
+  # 1.0.6:: Added support to use non-Hash objects directly as targets of easing. 
+  #         This is fully backwards compatible. Also added documentation for the delay option.
+  #
+  # 1.0.5:: Added support for a delay in options hash.
+  #         This makes the easing wait the specified x amount of frames before starting.
+  #
+  # 1.0.4:: TDD Ease Object updated. {from} now works as intended. 
+  #         Fixed attribute origin setting to remove method check, since that is done in the easing module already.
+  #
+  # 1.0.3:: Fixed @interpreter bug in Game_CharacterBase extension
+  #
+  # 1.0.2:: Introduced the TDD module namespace and Ease_Object instead of using a hash
+  #
+  class Ease
     class << self
       @@easings=[]
       

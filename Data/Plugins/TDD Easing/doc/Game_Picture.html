@@ -1,0 +1,1188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Game_Picture
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!Game_Picture.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (G)</a> &raquo;
+    
+    
+    <span class="title">Game_Picture</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Game_Picture
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Game_Picture</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">engine_extensions/Game_Picture.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<h6 id="label-"></h6>
+
+<p>** Game_Picture EXTENSION</p>
+<hr>
+
+<p>Version:  1.0.1 Date:     08/12/2013 Author:   Galenmereth / Tor Damian
+Design</p>
+
+<p>Extended for: TDD Easing Script</p>
+
+<h6 id="label-"></h6>
+
+<p>This extension changes the default transition easing for Move Picture and
+Tint Picture, so that it uses the TDD Easing script motion instead.</p>
+
+<p>How to use:</p>
+
+<h6 id="label-"></h6>
+
+<p>Use Game_Picture.easing= to set an easing method before calling move or 
+start_tone_change, either through scripts or through the use of Move
+Picture and Tint Picture event calls. Look at self.easing and
+self.easing_default for more details</p>
+
+<p>Credit:</p>
+
+<h6 id="label-"></h6>
+<ul><li>
+<p>Galenmereth / Tor Damian Design</p>
+</li></ul>
+
+<p>License:</p>
+
+<h6 id="label-"></h6>
+
+<p>Free for non-commercial and commercial use. Credit greatly appreciated but
+not required. Share script freely with everyone, but please retain this
+description area unless you change the script completely. Thank you.</p>
+
+<h6 id="label-"></h6>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="easing_method_default-classvariable" class="">@@easing_method_default =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Global default easing method; can be set using Game_Picture.easing_default=</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>Easing</span><span class='op'>::</span><span class='const'>LINEAR</span></pre></dd>
+      
+        <dt id="easing_method-classvariable" class="">@@easing_method =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>By default, the current easing method is set to the default</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='cvar'>@@easing_method_default</span></pre></dd>
+      
+        <dt id="easing_move_attributes-classvariable" class="">@@easing_move_attributes =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>List of variables to use for easing movement</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(
+</span><span class='tstring_content'>x</span><span class='words_sep'>
+</span><span class='tstring_content'>y</span><span class='words_sep'>
+</span><span class='tstring_content'>zoom_x</span><span class='words_sep'>
+</span><span class='tstring_content'>zoom_y</span><span class='words_sep'>
+</span><span class='tstring_content'>opacity</span><span class='words_sep'>
+</span><span class='tstring_content'>duration</span><span class='words_sep'>)</span></pre></dd>
+      
+        <dt id="easing_tint_attributes-classvariable" class="">@@easing_tint_attributes =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>List of variables to use for easing tone change</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(
+</span><span class='tstring_content'>   red</span><span class='words_sep'>
+</span><span class='tstring_content'>   green</span><span class='words_sep'>
+</span><span class='tstring_content'>   blue</span><span class='words_sep'>
+</span><span class='tstring_content'>   gray</span><span class='words_sep'>
+</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#easing%3D-class_method" title="easing= (class method)">+ (Object) <strong>easing=</strong>(easing_method) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>————————————————————————– * NEW Static Method Set Easing
+————————————————————————–.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#easing_default%3D-class_method" title="easing_default= (class method)">+ (Object) <strong>easing_default=</strong>(easing_method) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>————————————————————————– * NEW Static Method Set Easing Default for
+Game_Picture class ————————————————————————–.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#erase-instance_method" title="#erase (instance method)">- (Object) <strong>erase</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move-instance_method" title="#move (instance method)">- (Object) <strong>move</strong>(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#start_tone_change-instance_method" title="#start_tone_change (instance method)">- (Object) <strong>start_tone_change</strong>(tone, duration) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tdd_easing_erase_extension-instance_method" title="#tdd_easing_erase_extension (instance method)">- (Object) <strong>tdd_easing_erase_extension</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>————————————————————————– * ALIAS Erase Picture Comments:   The class
+static variable @@easing_method is reset to   @@easing_method_default upon
+erasure.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tdd_easing_move_extension-instance_method" title="#tdd_easing_move_extension (instance method)">- (Object) <strong>tdd_easing_move_extension</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>————————————————————————– * ALIAS Move Picture ————————————————————————–.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tdd_easing_start_tone_change_extension-instance_method" title="#tdd_easing_start_tone_change_extension (instance method)">- (Object) <strong>tdd_easing_start_tone_change_extension</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>————————————————————————– * ALIAS Start Changing Color Tone
+————————————————————————–.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tdd_easing_update_move_extension-instance_method" title="#tdd_easing_update_move_extension (instance method)">- (Object) <strong>tdd_easing_update_move_extension</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>————————————————————————– * ALIAS Update Picture Move Comments:   In case
+other scripts want to call update_move for any reason,   I make it check
+for the ease_obj from the easing; if it&#39;s not there,   it uses the
+default update_move method ————————————————————————-.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tdd_easing_update_tone_change_extension-instance_method" title="#tdd_easing_update_tone_change_extension (instance method)">- (Object) <strong>tdd_easing_update_tone_change_extension</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>————————————————————————– * ALIAS Update Color Tone Change Comments:   In
+case other scripts want to call update_tone_change for any reason,   I make
+it check for the ease_obj from the easing; if it&#39;s not there,   it uses
+the default update_tone_change method ————————————————————————–.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update-instance_method" title="#update (instance method)">- (Object) <strong>update</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>————————————————————————– * OVERWRITE Frame Update Comments:   update_move
+and update_tone_change left commented out to make it clear   that these
+have been disabled ————————————————————————–.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update_move-instance_method" title="#update_move (instance method)">- (Object) <strong>update_move</strong>(ease_obj = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update_tone_change-instance_method" title="#update_tone_change (instance method)">- (Object) <strong>update_tone_change</strong>(ease_obj) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="easing=-class_method">
+  
+    + (<tt>Object</tt>) <strong>easing=</strong>(easing_method) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <hr>
+<ul><li>
+<p>NEW Static Method Set Easing</p>
+</li></ul>
+<hr>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+160
+161
+162</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 160</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_easing='>easing=</span><span class='lparen'>(</span><span class='id identifier rubyid_easing_method'>easing_method</span><span class='rparen'>)</span>
+  <span class='cvar'>@@easing_method</span> <span class='op'>=</span> <span class='id identifier rubyid_easing_method'>easing_method</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="easing_default=-class_method">
+  
+    + (<tt>Object</tt>) <strong>easing_default=</strong>(easing_method) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <hr>
+<ul><li>
+<p>NEW Static Method Set Easing Default for Game_Picture class</p>
+</li></ul>
+<hr>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+167
+168
+169</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 167</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_easing_default='>easing_default=</span><span class='lparen'>(</span><span class='id identifier rubyid_easing_method'>easing_method</span><span class='rparen'>)</span>
+  <span class='cvar'>@@easing_method_default</span> <span class='op'>=</span> <span class='id identifier rubyid_easing_method'>easing_method</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="erase-instance_method">
+  
+    - (<tt>Object</tt>) <strong>erase</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104
+105</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_erase'>erase</span>
+  <span class='id identifier rubyid_tdd_easing_erase_extension'>tdd_easing_erase_extension</span>
+  <span class='cvar'>@@easing_method</span> <span class='op'>=</span> <span class='cvar'>@@easing_method_default</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move-instance_method">
+  
+    - (<tt>Object</tt>) <strong>move</strong>(origin, x, y, zoom_x, zoom_y, opacity, blend_type, duration) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 58</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move'>move</span><span class='lparen'>(</span><span class='id identifier rubyid_origin'>origin</span><span class='comma'>,</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_zoom_x'>zoom_x</span><span class='comma'>,</span> <span class='id identifier rubyid_zoom_y'>zoom_y</span><span class='comma'>,</span> <span class='id identifier rubyid_opacity'>opacity</span><span class='comma'>,</span> <span class='id identifier rubyid_blend_type'>blend_type</span><span class='comma'>,</span> <span class='id identifier rubyid_duration'>duration</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tdd_easing_move_extension'>tdd_easing_move_extension</span><span class='lparen'>(</span><span class='id identifier rubyid_origin'>origin</span><span class='comma'>,</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_zoom_x'>zoom_x</span><span class='comma'>,</span> <span class='id identifier rubyid_zoom_y'>zoom_y</span><span class='comma'>,</span> <span class='id identifier rubyid_opacity'>opacity</span><span class='comma'>,</span> <span class='id identifier rubyid_blend_type'>blend_type</span><span class='comma'>,</span> <span class='id identifier rubyid_duration'>duration</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_target_attributes'>target_attributes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_easing_container'>easing_container</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='cvar'>@@easing_move_attributes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_attr'>attr</span><span class='op'>|</span>
+    <span class='id identifier rubyid_easing_container'>easing_container</span><span class='lbracket'>[</span><span class='id identifier rubyid_attr'>attr</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_target_attributes'>target_attributes</span><span class='lbracket'>[</span><span class='id identifier rubyid_attr'>attr</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_attr'>attr</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='const'>TDD</span><span class='op'>::</span><span class='const'>Ease</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span><span class='lparen'>(</span><span class='id identifier rubyid_easing_container'>easing_container</span><span class='comma'>,</span> <span class='id identifier rubyid_duration'>duration</span><span class='comma'>,</span> <span class='id identifier rubyid_target_attributes'>target_attributes</span><span class='comma'>,</span> <span class='lbrace'>{</span>
+    <span class='symbol'>:easing</span> <span class='op'>=&gt;</span> <span class='cvar'>@@easing_method</span><span class='comma'>,</span>
+    <span class='symbol'>:observers</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='kw'>self</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='symbol'>:call_on_update</span> <span class='op'>=&gt;</span> <span class='symbol'>:update_move</span>
+    <span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="start_tone_change-instance_method">
+  
+    - (<tt>Object</tt>) <strong>start_tone_change</strong>(tone, duration) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 78</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_start_tone_change'>start_tone_change</span><span class='lparen'>(</span><span class='id identifier rubyid_tone'>tone</span><span class='comma'>,</span> <span class='id identifier rubyid_duration'>duration</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tdd_easing_start_tone_change_extension'>tdd_easing_start_tone_change_extension</span><span class='lparen'>(</span><span class='id identifier rubyid_tone'>tone</span><span class='comma'>,</span> <span class='id identifier rubyid_duration'>duration</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_easing_container'>easing_container</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_target_attributes'>target_attributes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='cvar'>@@easing_tint_attributes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_attr'>attr</span><span class='op'>|</span>
+    <span class='id identifier rubyid_easing_container'>easing_container</span><span class='lbracket'>[</span><span class='id identifier rubyid_attr'>attr</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@tone</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_attr'>attr</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_target_attributes'>target_attributes</span><span class='lbracket'>[</span><span class='id identifier rubyid_attr'>attr</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@tone_target</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_attr'>attr</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='const'>TDD</span><span class='op'>::</span><span class='const'>Ease</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span><span class='lparen'>(</span><span class='id identifier rubyid_easing_container'>easing_container</span><span class='comma'>,</span> <span class='id identifier rubyid_duration'>duration</span><span class='comma'>,</span> <span class='id identifier rubyid_target_attributes'>target_attributes</span><span class='comma'>,</span> <span class='lbrace'>{</span>
+    <span class='symbol'>:easing</span> <span class='op'>=&gt;</span> <span class='cvar'>@@easing_method</span><span class='comma'>,</span>
+    <span class='symbol'>:observers</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='kw'>self</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='symbol'>:call_on_update</span> <span class='op'>=&gt;</span> <span class='symbol'>:update_tone_change</span>
+    <span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tdd_easing_erase_extension-instance_method">
+  
+    - (<tt>Object</tt>) <strong>tdd_easing_erase_extension</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <hr>
+<ul><li>
+<p>ALIAS Erase Picture</p>
+</li></ul>
+
+<p>Comments:</p>
+
+<pre class="code ruby"><code class="ruby">The class static variable @@easing_method is reset to
+@@easing_method_default upon erasure.
+</code></pre>
+<hr>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 101</span>
+
+<span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:tdd_easing_erase_extension</span><span class='comma'>,</span> <span class='symbol'>:erase</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tdd_easing_move_extension-instance_method">
+  
+    - (<tt>Object</tt>) <strong>tdd_easing_move_extension</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <hr>
+<ul><li>
+<p>ALIAS Move Picture</p>
+</li></ul>
+<hr>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 57</span>
+
+<span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:tdd_easing_move_extension</span><span class='comma'>,</span> <span class='symbol'>:move</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tdd_easing_start_tone_change_extension-instance_method">
+  
+    - (<tt>Object</tt>) <strong>tdd_easing_start_tone_change_extension</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <hr>
+<ul><li>
+<p>ALIAS Start Changing Color Tone</p>
+</li></ul>
+<hr>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 77</span>
+
+<span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:tdd_easing_start_tone_change_extension</span><span class='comma'>,</span> <span class='symbol'>:start_tone_change</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tdd_easing_update_move_extension-instance_method">
+  
+    - (<tt>Object</tt>) <strong>tdd_easing_update_move_extension</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <hr>
+<ul><li>
+<p>ALIAS Update Picture Move</p>
+</li></ul>
+
+<p>Comments:</p>
+
+<pre class="code ruby"><code class="ruby">In case other scripts want to call update_move for any reason,
+I make it check for the ease_obj from the easing; if it&#39;s not there,
+it uses the default update_move method</code></pre>
+<hr>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 126</span>
+
+<span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:tdd_easing_update_move_extension</span><span class='comma'>,</span> <span class='symbol'>:update_move</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tdd_easing_update_tone_change_extension-instance_method">
+  
+    - (<tt>Object</tt>) <strong>tdd_easing_update_tone_change_extension</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <hr>
+<ul><li>
+<p>ALIAS Update Color Tone Change</p>
+</li></ul>
+
+<p>Comments:</p>
+
+<pre class="code ruby"><code class="ruby">In case other scripts want to call update_tone_change for any reason,
+I make it check for the ease_obj from the easing; if it&#39;s not there,
+it uses the default update_tone_change method</code></pre>
+<hr>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+145</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 145</span>
+
+<span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:tdd_easing_update_tone_change_extension</span><span class='comma'>,</span> <span class='symbol'>:update_tone_change</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update-instance_method">
+  
+    - (<tt>Object</tt>) <strong>update</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <hr>
+<ul><li>
+<p>OVERWRITE Frame Update</p>
+</li></ul>
+
+<p>Comments:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_update_move'>update_move</span> <span class='kw'>and</span> <span class='id identifier rubyid_update_tone_change'>update_tone_change</span> <span class='id identifier rubyid_left'>left</span> <span class='id identifier rubyid_commented'>commented</span> <span class='id identifier rubyid_out'>out</span> <span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_make'>make</span> <span class='id identifier rubyid_it'>it</span> <span class='id identifier rubyid_clear'>clear</span>
+<span class='id identifier rubyid_that'>that</span> <span class='id identifier rubyid_these'>these</span> <span class='id identifier rubyid_have'>have</span> <span class='id identifier rubyid_been'>been</span> <span class='id identifier rubyid_disabled'>disabled</span></code></pre>
+<hr>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+113
+114
+115
+116
+117</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 113</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
+  <span class='comment'># update_move
+</span>  <span class='comment'># update_tone_change
+</span>  <span class='id identifier rubyid_update_rotate'>update_rotate</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update_move-instance_method">
+  
+    - (<tt>Object</tt>) <strong>update_move</strong>(ease_obj = nil) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 127</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_update_move'>update_move</span><span class='lparen'>(</span><span class='id identifier rubyid_ease_obj'>ease_obj</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_ease_obj'>ease_obj</span>
+    <span class='id identifier rubyid_tdd_easing_update_move_extension'>tdd_easing_update_move_extension</span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_easing_container'>easing_container</span> <span class='op'>=</span> <span class='id identifier rubyid_ease_obj'>ease_obj</span><span class='period'>.</span><span class='id identifier rubyid_target'>target</span>
+  <span class='cvar'>@@easing_move_attributes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_attr'>attr</span><span class='op'>|</span>
+    <span class='id identifier rubyid_instance_variable_set'>instance_variable_set</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_easing_container'>easing_container</span><span class='lbracket'>[</span><span class='id identifier rubyid_attr'>attr</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update_tone_change-instance_method">
+  
+    - (<tt>Object</tt>) <strong>update_tone_change</strong>(ease_obj) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'engine_extensions/Game_Picture.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_update_tone_change'>update_tone_change</span><span class='lparen'>(</span><span class='id identifier rubyid_ease_obj'>ease_obj</span><span class='rparen'>)</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_ease_obj'>ease_obj</span>
+    <span class='id identifier rubyid_tdd_easing_update_tone_change_extension'>tdd_easing_update_tone_change_extension</span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_easing_container'>easing_container</span> <span class='op'>=</span> <span class='id identifier rubyid_ease_obj'>ease_obj</span><span class='period'>.</span><span class='id identifier rubyid_target'>target</span>
+  <span class='cvar'>@@easing_tint_attributes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_attr'>attr</span><span class='op'>|</span>
+    <span class='ivar'>@tone</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_easing_container'>easing_container</span><span class='lbracket'>[</span><span class='id identifier rubyid_attr'>attr</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Dec 14 02:03:27 2014 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.5).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,1654 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Easing
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!Easing.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (E)</a> &raquo;
+    
+    
+    <span class="title">Easing</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Easing
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">easing_addons/quad.rb<span class="defines">,<br />
+  easing_addons/expo.rb,<br /> easing_addons/back.rb,<br /> easing_addons/cubic.rb,<br /> easing_addons/bounce.rb,<br /> easing_addons/linear.rb,<br /> easing_addons/elastic.rb,<br /> easing_addons/circular.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<h6 id="label-"></h6>
+
+<p>** Easing EXTENSION</p>
+<hr>
+
+<p>Extended for: TDD Easing Script</p>
+
+<h6 id="label-"></h6>
+
+<p>This extension adds 3 new easing methods to the Easing module:</p>
+<ul><li>
+<p>CIRC_IN</p>
+</li><li>
+<p>CIRC_OUT</p>
+</li><li>
+<p>CIRC_IN_OUT</p>
+</li></ul>
+
+<p>How to use:</p>
+
+<h6 id="label-"></h6>
+
+<p>Use Game_Picture.easing = Easing::CIRC_IN (or any of the other three
+methods listed above) to apply before performing moving or tinting of the
+Game_Picture class.</p>
+
+<p>Credit:</p>
+
+<h6 id="label-"></h6>
+<ul><li>
+<p>Galenmereth / Tor Damian Design</p>
+</li></ul>
+
+<p>License:</p>
+
+<h6 id="label-"></h6>
+
+<p>Free for non-commercial and commercial use. Credit greatly appreciated but
+not required. Share script freely with everyone, but please retain this
+description area unless you change the script completely. Thank you.</p>
+
+<h6 id="label-"></h6>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="QUAD_IN-constant" class="">QUAD_IN =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>quad_in</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="QUAD_OUT-constant" class="">QUAD_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>quad_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="QUAD_IN_OUT-constant" class="">QUAD_IN_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>quad_in_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="EXPO_IN-constant" class="">EXPO_IN =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expo_in</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="EXPO_OUT-constant" class="">EXPO_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expo_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="EXPO_IN_OUT-constant" class="">EXPO_IN_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expo_in_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="BACK_IN-constant" class="">BACK_IN =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>back_in</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="BACK_OUT-constant" class="">BACK_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>back_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="BACK_IN_OUT-constant" class="">BACK_IN_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>back_in_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="SLING-constant" class="">SLING =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>This is the intensity of the back “sling” effect. Higher = stronger</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='float'>1.70158</span></pre></dd>
+      
+        <dt id="CUBIC_IN-constant" class="">CUBIC_IN =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cubic_in</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="CUBIC_OUT-constant" class="">CUBIC_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cubic_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="CUBIC_IN_OUT-constant" class="">CUBIC_IN_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cubic_in_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="BOUNCE_IN-constant" class="">BOUNCE_IN =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bounce_in</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="BOUNCE_OUT-constant" class="">BOUNCE_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bounce_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="BOUNCE_IN_OUT-constant" class="">BOUNCE_IN_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bounce_in_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="LINEAR-constant" class="">LINEAR =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>linear</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="ELASTIC_IN-constant" class="">ELASTIC_IN =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>elastic_in</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="ELASTIC_OUT-constant" class="">ELASTIC_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>elastic_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="ELASTIC_IN_OUT-constant" class="">ELASTIC_IN_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>elastic_in_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="CIRC_IN-constant" class="">CIRC_IN =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>circ_in</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="CIRC_OUT-constant" class="">CIRC_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>circ_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="CIRC_IN_OUT-constant" class="">CIRC_IN_OUT =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>circ_in_out</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#back_in-class_method" title="back_in (class method)">+ (Object) <strong>back_in</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#back_in_out-class_method" title="back_in_out (class method)">+ (Object) <strong>back_in_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#back_out-class_method" title="back_out (class method)">+ (Object) <strong>back_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bounce_in-class_method" title="bounce_in (class method)">+ (Object) <strong>bounce_in</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bounce_in_out-class_method" title="bounce_in_out (class method)">+ (Object) <strong>bounce_in_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bounce_out-class_method" title="bounce_out (class method)">+ (Object) <strong>bounce_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#circ_in-class_method" title="circ_in (class method)">+ (Object) <strong>circ_in</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#circ_in_out-class_method" title="circ_in_out (class method)">+ (Object) <strong>circ_in_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#circ_out-class_method" title="circ_out (class method)">+ (Object) <strong>circ_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cubic_in-class_method" title="cubic_in (class method)">+ (Object) <strong>cubic_in</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cubic_in_out-class_method" title="cubic_in_out (class method)">+ (Object) <strong>cubic_in_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cubic_out-class_method" title="cubic_out (class method)">+ (Object) <strong>cubic_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#elastic_in-class_method" title="elastic_in (class method)">+ (Object) <strong>elastic_in</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#elastic_in_out-class_method" title="elastic_in_out (class method)">+ (Object) <strong>elastic_in_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#elastic_out-class_method" title="elastic_out (class method)">+ (Object) <strong>elastic_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#expo_in-class_method" title="expo_in (class method)">+ (Object) <strong>expo_in</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#expo_in_out-class_method" title="expo_in_out (class method)">+ (Object) <strong>expo_in_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#expo_out-class_method" title="expo_out (class method)">+ (Object) <strong>expo_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#linear-class_method" title="linear (class method)">+ (Object) <strong>linear</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>t = Current time (frame) b = Start value c = Desired change in value d =
+Duration total (frames) Returns: Value modified by t.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#quad_in-class_method" title="quad_in (class method)">+ (Object) <strong>quad_in</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#quad_in_out-class_method" title="quad_in_out (class method)">+ (Object) <strong>quad_in_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#quad_out-class_method" title="quad_out (class method)">+ (Object) <strong>quad_out</strong>(t, b, c, d) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="back_in-class_method">
+  
+    + (<tt>Object</tt>) <strong>back_in</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/back.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_back_in'>back_in</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='const'>SLING</span>
+  <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/=</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='op'>+</span><span class='int'>1</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>-</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="back_in_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>back_in_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/back.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_back_in_out'>back_in_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='const'>SLING</span>
+  <span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/=</span><span class='id identifier rubyid_d'>d</span><span class='op'>/</span><span class='int'>2</span><span class='rparen'>)</span> <span class='op'>&lt;</span> <span class='int'>1</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='op'>*=</span><span class='lparen'>(</span><span class='float'>1.525</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='int'>1</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>-</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>else</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span><span class='op'>*</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-=</span><span class='int'>2</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='op'>*=</span><span class='lparen'>(</span><span class='float'>1.525</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='int'>1</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="back_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>back_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/back.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_back_out'>back_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='const'>SLING</span>
+  <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>=</span><span class='id identifier rubyid_t'>t</span><span class='op'>/</span><span class='id identifier rubyid_d'>d</span><span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='op'>+</span><span class='int'>1</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bounce_in-class_method">
+  
+    + (<tt>Object</tt>) <strong>bounce_in</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/bounce.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_bounce_in'>bounce_in</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span> <span class='op'>-</span> <span class='kw'>self</span><span class='op'>::</span><span class='id identifier rubyid_bounce_out'>bounce_out</span><span class='lparen'>(</span><span class='id identifier rubyid_d'>d</span><span class='op'>-</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bounce_in_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>bounce_in_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/bounce.rb', line 48</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_bounce_in_out'>bounce_in_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_t'>t</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='op'>/</span><span class='int'>2</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_bounce_in'>bounce_in</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='int'>2</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='float'>0.5</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>else</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_bounce_out'>bounce_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='int'>2</span><span class='op'>-</span><span class='id identifier rubyid_d'>d</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='float'>0.5</span> <span class='op'>+</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='float'>0.5</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bounce_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>bounce_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/bounce.rb', line 36</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_bounce_out'>bounce_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/=</span><span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='rparen'>)</span> <span class='op'>&lt;</span> <span class='lparen'>(</span><span class='int'>1</span><span class='op'>/</span><span class='float'>2.75</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='lparen'>(</span><span class='float'>7.5625</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_t'>t</span> <span class='op'>&lt;</span> <span class='lparen'>(</span><span class='int'>2</span><span class='op'>/</span><span class='float'>2.75</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='lparen'>(</span><span class='float'>7.5625</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-=</span><span class='lparen'>(</span><span class='float'>1.5</span><span class='op'>/</span><span class='float'>2.75</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='float'>0.75</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_t'>t</span> <span class='op'>&lt;</span> <span class='lparen'>(</span><span class='float'>2.5</span><span class='op'>/</span><span class='float'>2.75</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='lparen'>(</span><span class='float'>7.5625</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-=</span><span class='lparen'>(</span><span class='float'>2.25</span><span class='op'>/</span><span class='float'>2.75</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='float'>0.9375</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>else</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='lparen'>(</span><span class='float'>7.5625</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-=</span><span class='lparen'>(</span><span class='float'>2.625</span><span class='op'>/</span><span class='float'>2.75</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='float'>0.984375</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="circ_in-class_method">
+  
+    + (<tt>Object</tt>) <strong>circ_in</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/circular.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_circ_in'>circ_in</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='op'>-</span><span class='id identifier rubyid_c'>c</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_sqrt'>sqrt</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/=</span><span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="circ_in_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>circ_in_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/circular.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_circ_in_out'>circ_in_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/=</span><span class='id identifier rubyid_d'>d</span><span class='op'>/</span><span class='int'>2</span><span class='rparen'>)</span> <span class='op'>&lt;</span> <span class='int'>1</span>
+    <span class='kw'>return</span> <span class='op'>-</span><span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_sqrt'>sqrt</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>-</span> <span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>else</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_sqrt'>sqrt</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-=</span><span class='int'>2</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="circ_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>circ_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/circular.rb', line 36</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_circ_out'>circ_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span> <span class='op'>*</span> <span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_sqrt'>sqrt</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>=</span><span class='id identifier rubyid_t'>t</span><span class='op'>/</span><span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cubic_in-class_method">
+  
+    + (<tt>Object</tt>) <strong>cubic_in</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/cubic.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cubic_in'>cubic_in</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_t'>t</span> <span class='op'>/=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cubic_in_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>cubic_in_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/cubic.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cubic_in_out'>cubic_in_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_t'>t</span> <span class='op'>/=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='op'>/</span><span class='int'>2</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span> <span class='kw'>if</span> <span class='id identifier rubyid_t'>t</span> <span class='op'>&lt;</span> <span class='int'>1</span>
+  <span class='id identifier rubyid_t'>t</span> <span class='op'>-=</span> <span class='int'>2</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cubic_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>cubic_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/cubic.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cubic_out'>cubic_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_t'>t</span> <span class='op'>/=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_t'>t</span> <span class='op'>-=</span> <span class='int'>1</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="elastic_in-class_method">
+  
+    + (<tt>Object</tt>) <strong>elastic_in</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/elastic.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_elastic_in'>elastic_in</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_d'>d</span><span class='op'>=</span><span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_c'>c</span><span class='op'>=</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_s'>s</span><span class='op'>=</span><span class='float'>1.70158</span>
+  <span class='id identifier rubyid_p'>p</span><span class='op'>=</span><span class='int'>0</span>
+  <span class='id identifier rubyid_a'>a</span><span class='op'>=</span><span class='id identifier rubyid_c'>c</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_b'>b</span> <span class='kw'>if</span> <span class='id identifier rubyid_t'>t</span><span class='op'>==</span><span class='int'>0</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_b'>b</span><span class='op'>+</span><span class='id identifier rubyid_c'>c</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/=</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span><span class='op'>==</span><span class='int'>1</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_p'>p</span><span class='op'>=</span><span class='id identifier rubyid_d'>d</span><span class='op'>*</span><span class='float'>0.3</span> <span class='kw'>if</span> <span class='id identifier rubyid_p'>p</span><span class='op'>==</span><span class='int'>0</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_a'>a</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_abs'>abs</span>
+    <span class='id identifier rubyid_a'>a</span><span class='op'>=</span><span class='id identifier rubyid_c'>c</span>
+    <span class='id identifier rubyid_s'>s</span><span class='op'>=</span><span class='id identifier rubyid_p'>p</span><span class='op'>/</span><span class='int'>4</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='op'>/</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>*</span><span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_asin'>asin</span><span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_nonzero?'>nonzero?</span> <span class='op'>||</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='op'>-</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='op'>*</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>**</span><span class='lparen'>(</span><span class='int'>10</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-=</span><span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_sin'>sin</span><span class='lparen'>(</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_d'>d</span><span class='op'>-</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span><span class='op'>*</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>*</span><span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span><span class='rparen'>)</span><span class='op'>/</span><span class='id identifier rubyid_p'>p</span> <span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="elastic_in_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>elastic_in_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/elastic.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_elastic_in_out'>elastic_in_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_d'>d</span><span class='op'>=</span><span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_c'>c</span><span class='op'>=</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_s'>s</span><span class='op'>=</span><span class='float'>1.70158</span>
+  <span class='id identifier rubyid_p'>p</span><span class='op'>=</span><span class='int'>0</span>
+  <span class='id identifier rubyid_a'>a</span><span class='op'>=</span><span class='id identifier rubyid_c'>c</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_b'>b</span> <span class='kw'>if</span> <span class='id identifier rubyid_t'>t</span><span class='op'>==</span><span class='int'>0</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_b'>b</span><span class='op'>+</span><span class='id identifier rubyid_c'>c</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/=</span><span class='id identifier rubyid_d'>d</span><span class='op'>/</span><span class='int'>2</span><span class='rparen'>)</span><span class='op'>==</span><span class='int'>2</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_p'>p</span><span class='op'>=</span><span class='id identifier rubyid_d'>d</span><span class='op'>*</span><span class='lparen'>(</span><span class='float'>0.3</span><span class='op'>*</span><span class='float'>1.5</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_p'>p</span><span class='op'>==</span><span class='int'>0</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_a'>a</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_abs'>abs</span>
+    <span class='id identifier rubyid_a'>a</span><span class='op'>=</span><span class='id identifier rubyid_c'>c</span>
+    <span class='id identifier rubyid_s'>s</span><span class='op'>=</span><span class='id identifier rubyid_p'>p</span><span class='op'>/</span><span class='int'>4</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='op'>/</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>*</span><span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_asin'>asin</span><span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_nonzero?'>nonzero?</span> <span class='op'>||</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_a'>a</span><span class='op'>*</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>**</span><span class='lparen'>(</span><span class='op'>-</span><span class='int'>10</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-=</span><span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_sin'>sin</span><span class='lparen'>(</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_d'>d</span><span class='op'>-</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span><span class='op'>*</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>*</span><span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span><span class='rparen'>)</span><span class='op'>/</span><span class='id identifier rubyid_p'>p</span> <span class='rparen'>)</span><span class='op'>*</span><span class='float'>0.5</span> <span class='op'>+</span> <span class='id identifier rubyid_c'>c</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="elastic_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>elastic_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/elastic.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_elastic_out'>elastic_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_d'>d</span><span class='op'>=</span><span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_c'>c</span><span class='op'>=</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_s'>s</span><span class='op'>=</span><span class='float'>1.70158</span>
+  <span class='id identifier rubyid_p'>p</span><span class='op'>=</span><span class='int'>0</span>
+  <span class='id identifier rubyid_a'>a</span><span class='op'>=</span><span class='id identifier rubyid_c'>c</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_b'>b</span> <span class='kw'>if</span> <span class='id identifier rubyid_t'>t</span><span class='op'>==</span><span class='int'>0</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_b'>b</span><span class='op'>+</span><span class='id identifier rubyid_c'>c</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/=</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span><span class='op'>==</span><span class='int'>1</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_p'>p</span> <span class='op'>=</span> <span class='id identifier rubyid_d'>d</span><span class='op'>*</span><span class='float'>0.3</span> <span class='kw'>if</span> <span class='id identifier rubyid_p'>p</span><span class='op'>==</span><span class='int'>0</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_a'>a</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_abs'>abs</span>
+    <span class='id identifier rubyid_a'>a</span><span class='op'>=</span><span class='id identifier rubyid_c'>c</span>
+    <span class='id identifier rubyid_s'>s</span><span class='op'>=</span><span class='id identifier rubyid_p'>p</span><span class='op'>/</span><span class='int'>4</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='op'>/</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>*</span><span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_asin'>asin</span><span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_nonzero?'>nonzero?</span> <span class='op'>||</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_a'>a</span><span class='op'>*</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>**</span><span class='lparen'>(</span><span class='op'>-</span><span class='int'>10</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='const'>Math</span><span class='period'>.</span><span class='id identifier rubyid_sin'>sin</span><span class='lparen'>(</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_d'>d</span><span class='op'>-</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span><span class='op'>*</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>*</span><span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span><span class='rparen'>)</span><span class='op'>/</span><span class='id identifier rubyid_p'>p</span> <span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_c'>c</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="expo_in-class_method">
+  
+    + (<tt>Object</tt>) <strong>expo_in</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/expo.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_expo_in'>expo_in</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>==</span><span class='int'>0</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_b'>b</span> <span class='op'>:</span> <span class='id identifier rubyid_c'>c</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='int'>2</span><span class='op'>**</span><span class='lparen'>(</span><span class='int'>10</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/</span><span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="expo_in_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>expo_in_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/expo.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_expo_in_out'>expo_in_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_b'>b</span> <span class='kw'>if</span> <span class='id identifier rubyid_t'>t</span><span class='op'>==</span><span class='int'>0</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_b'>b</span><span class='op'>+</span><span class='id identifier rubyid_c'>c</span> <span class='kw'>if</span> <span class='id identifier rubyid_t'>t</span><span class='op'>==</span><span class='id identifier rubyid_d'>d</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>/=</span><span class='id identifier rubyid_d'>d</span><span class='op'>/</span><span class='int'>2</span><span class='rparen'>)</span> <span class='op'>&lt;</span> <span class='int'>1</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='int'>2</span><span class='op'>**</span><span class='lparen'>(</span><span class='int'>10</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>else</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='op'>-</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>**</span><span class='lparen'>(</span><span class='op'>-</span><span class='int'>10</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-=</span><span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="expo_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>expo_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/expo.rb', line 36</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_expo_out'>expo_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>==</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_b'>b</span><span class='op'>+</span><span class='id identifier rubyid_c'>c</span> <span class='op'>:</span> <span class='id identifier rubyid_c'>c</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='op'>-</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>**</span><span class='lparen'>(</span><span class='op'>-</span><span class='int'>10</span> <span class='op'>*</span> <span class='id identifier rubyid_t'>t</span><span class='op'>/</span><span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="linear-class_method">
+  
+    + (<tt>Object</tt>) <strong>linear</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>t = Current time (frame) b = Start value c = Desired change in value d =
+Duration total (frames) Returns: Value modified by t</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/linear.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_linear'>linear</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>/</span><span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="quad_in-class_method">
+  
+    + (<tt>Object</tt>) <strong>quad_in</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/quad.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_quad_in'>quad_in</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_t'>t</span> <span class='op'>/=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="quad_in_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>quad_in_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/quad.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_quad_in_out'>quad_in_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_t'>t</span> <span class='op'>/=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='op'>/</span><span class='int'>2</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='id identifier rubyid_t'>t</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span> <span class='kw'>if</span> <span class='id identifier rubyid_t'>t</span> <span class='op'>&lt;</span> <span class='int'>1</span>
+  <span class='id identifier rubyid_t'>t</span> <span class='op'>-=</span> <span class='int'>1</span>
+  <span class='kw'>return</span> <span class='op'>-</span><span class='id identifier rubyid_c'>c</span><span class='op'>/</span><span class='int'>2</span> <span class='op'>*</span> <span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-</span><span class='int'>2</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="quad_out-class_method">
+  
+    + (<tt>Object</tt>) <strong>quad_out</strong>(t, b, c, d) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'easing_addons/quad.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_quad_out'>quad_out</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_t'>t</span> <span class='op'>/=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='kw'>return</span> <span class='op'>-</span><span class='id identifier rubyid_c'>c</span> <span class='op'>*</span> <span class='id identifier rubyid_t'>t</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='op'>-</span><span class='int'>2</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span><span class='semicolon'>;</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Dec 14 02:03:27 2014 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.5).
+</div>
+
+  </body>
+</html>
