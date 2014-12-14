@@ -31,12 +31,10 @@ module TDD
   # 1.0.3:: Fixed @interpreter bug in Game_CharacterBase extension
   #
   # 1.0.2:: Introduced the TDD module namespace and Ease_Object instead of using a hash
-  #
   class Ease
     class << self
       @@easings=[]
       
-      ######
       # Ease parameters *to* given attribute values from target's current attribute values
       #
       # @param (Object, Array) target
@@ -92,12 +90,10 @@ module TDD
       #   function to write directly to a caller class. Look at the Game_Picture
       #   extension for an example of this necessity, where I didn't want to make
       #   any of the read-only attributes writable to implement easing.
-      ######
       def to(target, frames, attributes={}, options={})
         register_ease(:to, target, frames, attributes, options)
       end
 
-      ######
       # Ease parameters *from* given attribute values to target's current attribute values 
       #
       # @return (see to)
@@ -106,17 +102,14 @@ module TDD
       # @note Functions like to, except eases *from* given attributes values *to* current target attribute values
       #
       # @see to
-      ######
       def from(target, frames, attributes={}, options={})
         register_ease(:from, target, frames, attributes, options)
       end
 
-      ######
       # Updates easings every engine / Scene frame tick
       #
       # @note
       #   Called by Scene_Base when the extension is in place for it.
-      ######
       def update
         @@easings.each do |ease|
           # Skip to wait for delay option if present
@@ -139,11 +132,9 @@ module TDD
         end
       end
 
-      ######
       # Perform ease for Ease_Object
       #
       # @param (Ease_Object) ease   The Ease_Object to advance the animation 1 frame tick
-      ######
       def perform_ease_for(ease)
         # Initial setup of origin attributes
         ease.setup
@@ -187,13 +178,11 @@ module TDD
         end
       end
 
-      ######
       # Register an Ease_Object in queue
       #
       # @param (Symbol) method (:to, :from) - The method to use
       # @param (see to)
       # @return (see to)
-      ######
       def register_ease(method, target, frames, attributes, options)
         if target.is_a? Array
           target.each{|target| self.register_ease(method, target, frames, attributes, options)}
@@ -213,13 +202,11 @@ module TDD
 
       end
 
-      ######
       # Overwrite other ease queues for Ease_Objects with the same target
       # 
       # @param (Ease_Object) ease   The Ease_Object to search for like targets
       #
       # @note Overwrites (deletes) other Ease_Objects with the same target
-      ######
       def overwrite_other_easings(ease)
         return unless ease.overwrite
 
@@ -232,13 +219,11 @@ module TDD
         end
       end
 
-      ######
       # Clear all active easings for a target object
       #
       # @param (Hash) args    Options Hash
       # @option args [Object] :target - The target Object to clear easings for
       # @option args [Boolean] :perform_complete_call (false) - Whether to perform the complete call on each Ease_Object or not
-      ######
       def clear_easings_for(args={})
         args = {
           :target                => nil,
