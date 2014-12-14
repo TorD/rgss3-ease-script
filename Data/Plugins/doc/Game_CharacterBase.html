@@ -94,7 +94,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">engine_extensions/Game_CharacterBase.rb</dd>
+    <dd class="r2 last">TDD Easing/engine_extensions/Game_CharacterBase.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -457,7 +457,7 @@ if string then relative to current position. Examples:
 90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ease_moveto'>ease_moveto</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_frames'>frames</span><span class='comma'>,</span> <span class='id identifier rubyid_easing'>easing</span> <span class='op'>=</span> <span class='symbol'>:linear</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='ivar'>@real_x</span> <span class='op'>+</span> <span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
@@ -539,7 +539,7 @@ if string then relative to current position. Examples:
 51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ease_moveto_char'>ease_moveto_char</span><span class='lparen'>(</span><span class='id identifier rubyid_char'>char</span><span class='comma'>,</span> <span class='id identifier rubyid_frames'>frames</span><span class='comma'>,</span> <span class='id identifier rubyid_easing'>easing</span> <span class='op'>=</span> <span class='symbol'>:linear</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_char'>char</span> <span class='op'>=</span> <span class='cvar'>@@interpreter</span><span class='period'>.</span><span class='id identifier rubyid_get_character'>get_character</span><span class='lparen'>(</span><span class='id identifier rubyid_char'>char</span><span class='rparen'>)</span>
@@ -586,7 +586,7 @@ if string then relative to current position. Examples:
 139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ease_moveto_complete'>ease_moveto_complete</span><span class='lparen'>(</span><span class='id identifier rubyid_ease_obj'>ease_obj</span><span class='rparen'>)</span>
   <span class='ivar'>@x</span> <span class='op'>=</span> <span class='ivar'>@real_x</span>
@@ -638,7 +638,7 @@ if string then relative to current position. Examples:
 130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ease_moveto_update'>ease_moveto_update</span><span class='lparen'>(</span><span class='id identifier rubyid_ease_obj'>ease_obj</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_last_real_x'>last_real_x</span> <span class='op'>=</span> <span class='ivar'>@real_x</span>
@@ -717,7 +717,7 @@ string values.</code></pre>
 117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ease_opacity'>ease_opacity</span><span class='lparen'>(</span><span class='id identifier rubyid_opacity'>opacity</span><span class='comma'>,</span> <span class='id identifier rubyid_frames'>frames</span><span class='comma'>,</span> <span class='id identifier rubyid_easing'>easing</span> <span class='op'>=</span> <span class='symbol'>:linear</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_opacity'>opacity</span> <span class='op'>=</span> <span class='ivar'>@opacity</span> <span class='op'>+</span> <span class='id identifier rubyid_opacity'>opacity</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_opacity'>opacity</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
@@ -771,7 +771,7 @@ string values.</code></pre>
 153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 151</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ease_opacity_complete'>ease_opacity_complete</span><span class='lparen'>(</span><span class='id identifier rubyid_ease_obj'>ease_obj</span><span class='rparen'>)</span>
   <span class='ivar'>@easing</span> <span class='op'>=</span> <span class='kw'>false</span>
@@ -815,7 +815,7 @@ string values.</code></pre>
 146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 144</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ease_opacity_update'>ease_opacity_update</span><span class='lparen'>(</span><span class='id identifier rubyid_ease_obj'>ease_obj</span><span class='rparen'>)</span>
   <span class='ivar'>@opacity</span> <span class='op'>=</span> <span class='id identifier rubyid_ease_obj'>ease_obj</span><span class='period'>.</span><span class='id identifier rubyid_target'>target</span><span class='lbracket'>[</span><span class='symbol'>:opacity</span><span class='rbracket'>]</span>
@@ -872,7 +872,7 @@ string values.</code></pre>
 160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_easing?'>easing?</span>
   <span class='ivar'>@easing</span>
@@ -924,7 +924,7 @@ string values.</code></pre>
 168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_moving?'>moving?</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_easing?'>easing?</span> <span class='op'>?</span> <span class='kw'>false</span> <span class='op'>:</span> <span class='id identifier rubyid_tdd_easing_moving?'>tdd_easing_moving?</span>
@@ -966,7 +966,7 @@ string values.</code></pre>
 165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'engine_extensions/Game_CharacterBase.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/engine_extensions/Game_CharacterBase.rb', line 165</span>
 
 <span class='kw'>alias</span> <span class='symbol'>:tdd_easing_moving?</span> <span class='symbol'>:moving?</span></pre>
     </td>
@@ -979,7 +979,7 @@ string values.</code></pre>
 </div>
 
     <div id="footer">
-  Generated on Sun Dec 14 02:03:27 2014 by
+  Generated on Sun Dec 14 02:07:15 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.5).
 </div>
