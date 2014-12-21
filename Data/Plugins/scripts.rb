@@ -5,8 +5,8 @@ module TDD
   #           Easing methods can be extended through adding static methods to the Easing module. The default easing method
   #           is Easing::LINEAR and is identical to the default easing provided in VXAce
   #
-  # Version:: 1.0.7
-  # Date::    12/14/2014
+  # Version:: 1.0.8
+  # Date::    12/21/2014
   # Author::  Galenmereth / Tor Damian Design <post@tordamian.com>
   #
   # License:: Free for non-commercial and commercial use. Credit greatly appreciated but not required.
@@ -14,6 +14,9 @@ module TDD
   #           the script completely. Thank you.
   #
   #== Changelog
+  # 1.0.8::  * Added {complete_easings_for} with options.
+  #          * Fixed overwrite bug, so that it checks for pointer uniqueness when comparing two
+  #            easing targets.
   # 1.0.7::  * Added :overwrite option for {to}, {from} and {register_ease} called :overwrite, 
   #            which will overwrite any other easings for the given target(s).
   #          * Added new public method: {clear_easings_for}. See its documentation
@@ -31,12 +34,10 @@ module TDD
   # 1.0.3:: Fixed @interpreter bug in Game_CharacterBase extension
   #
   # 1.0.2:: Introduced the TDD module namespace and Ease_Object instead of using a hash
-  #
   class Ease
     class << self
       @@easings=[]
       
-      ######
       # Ease parameters *to* given attribute values from target's current attribute values
       #
       # @param (Object, Array) target
@@ -92,12 +93,10 @@ module TDD
       #   function to write directly to a caller class. Look at the Game_Picture
       #   extension for an example of this necessity, where I didn't want to make
       #   any of the read-only attributes writable to implement easing.
-      ######
       def to(target, frames, attributes={}, options={})
         register_ease(:to, target, frames, attributes, options)
       end
 
-      ######
       # Ease parameters *from* given attribute values to target's current attribute values 
       #
       # @return (see to)
@@ -106,17 +105,14 @@ module TDD
       # @note Functions like to, except eases *from* given attributes values *to* current target attribute values
       #
       # @see to
-      ######
       def from(target, frames, attributes={}, options={})
         register_ease(:from, target, frames, attributes, options)
       end
 
-      ######
       # Updates easings every engine / Scene frame tick
       #
       # @note
       #   Called by Scene_Base when the extension is in place for it.
-      ######
       def update
         @@easings.each do |ease|
           # Skip to wait for delay option if present
@@ -127,23 +123,15 @@ module TDD
           
           # Delete other easings if overwrite set
           self.overwrite_other_easings(ease) if ease.overwrite
-          
-          # Set local target var
-          target = ease.target
-
-          # Do not attempt to animate disposed items
-          next if target.class.method_defined?("disposed?") && target.disposed?
 
           # Perform ease calculations
           perform_ease_for(ease)
         end
       end
 
-      ######
       # Perform ease for Ease_Object
       #
       # @param (Ease_Object) ease   The Ease_Object to advance the animation 1 frame tick
-      ######
       def perform_ease_for(ease)
         # Initial setup of origin attributes
         ease.setup
@@ -151,49 +139,52 @@ module TDD
         # Set local target var
         target = ease.target
 
-        # Perform easing
-        ease.attributes.each_pair do |attribute, value|
-          attribute_origin = ease.attributes_origin[attribute]
-          case ease.method
-          when :to
-            from = attribute_origin
-            to = value
-          when :from
-            from = value
-            to = attribute_origin
+        begin
+          # Perform easing
+          ease.attributes.each_pair do |attribute, value|
+            attribute_origin = ease.attributes_origin[attribute]
+            case ease.method
+            when :to
+              from = attribute_origin
+              to = value
+            when :from
+              from = value
+              to = attribute_origin
+            end
+
+            # Move instantly if frames is 1
+            if ease.frames == 1
+              value = to
+            else
+              value = Easing.send(ease.easing, ease.frame, from, to - from, ease.frames)
+            end
+
+            # Set the attribute on the target
+            if target.is_a? Hash
+              target[attribute] = value
+            else
+              target.send("#{attribute}=", value)
+            end
           end
 
-          # Move instantly if frames is 1
-          if ease.frames == 1
-            value = to
-          else
-            value = Easing.send(ease.easing, ease.frame, from, to - from, ease.frames)
+          ease.observers.each{|o| o.send(ease.call_on_update, ease)} if ease.call_on_update
+
+          ease.frame += 1
+          if ease.frame > ease.frames
+            @@easings.delete(ease)
+            ease.observers.each{|o| o.send(ease.call_on_complete, ease)} if ease.call_on_complete
           end
-
-          # Set the attribute on the target
-          if target.is_a? Hash
-            target[attribute] = value
-          else
-            target.send("#{attribute}=", value)
-          end
-        end
-
-        ease.observers.each{|o| o.send(ease.call_on_update, ease)} if ease.call_on_update
-
-        ease.frame += 1
-        if ease.frame > ease.frames
-          @@easings.delete(ease)
-          ease.observers.each{|o| o.send(ease.call_on_complete, ease)} if ease.call_on_complete
+        rescue
+          # Do not attempt to animate disposed items
+          clear_easings_for(target: target) if target.class.method_defined?("disposed?") && target.disposed?
         end
       end
 
-      ######
       # Register an Ease_Object in queue
       #
       # @param (Symbol) method (:to, :from) - The method to use
       # @param (see to)
       # @return (see to)
-      ######
       def register_ease(method, target, frames, attributes, options)
         if target.is_a? Array
           target.each{|target| self.register_ease(method, target, frames, attributes, options)}
@@ -213,13 +204,11 @@ module TDD
 
       end
 
-      ######
       # Overwrite other ease queues for Ease_Objects with the same target
       # 
       # @param (Ease_Object) ease   The Ease_Object to search for like targets
       #
       # @note Overwrites (deletes) other Ease_Objects with the same target
-      ######
       def overwrite_other_easings(ease)
         return unless ease.overwrite
 
@@ -228,17 +217,15 @@ module TDD
 
         # Remove other ease with same target
         @@easings.each do |ease_to_delete|
-          @@easings.delete(ease_to_delete) if ease_to_delete.target == ease.target && ease_to_delete != ease
+          @@easings.delete(ease_to_delete) if ease_to_delete.target.equal?(ease.target) && ease_to_delete != ease
         end
       end
 
-      ######
       # Clear all active easings for a target object
       #
       # @param (Hash) args    Options Hash
       # @option args [Object] :target - The target Object to clear easings for
       # @option args [Boolean] :perform_complete_call (false) - Whether to perform the complete call on each Ease_Object or not
-      ######
       def clear_easings_for(args={})
         args = {
           :target                => nil,
@@ -246,9 +233,24 @@ module TDD
         }.merge(args)
 
         @@easings.each do |ease|
-          @@easings.delete(ease) if ease.target == args[:target]
+          @@easings.delete(ease) if ease.target.equal?(args[:target])
           if args[:perform_complete_call]
             ease.observers.each{|o| o.send(ease.call_on_complete, ease)} if ease.call_on_complete
+          end
+        end
+      end
+
+      # Complete easings for a target (or an array of targets). Skips directly to the last "frame" of transition.
+      #
+      # @param [Object, Array] target The target Object to complete easings for, or an Array of target Objects to complete easings for.
+      # @param [Boolean] perform_complete_call Whether to call the :call_on_complete optional method on the target(s)
+      def complete_easings_for(target, perform_complete_call=false)
+        if target.is_a? Array
+          target.each{|t| complete_easings_for(t, perform_complete_call)}
+        else
+          @@easings.select{|e| e.target == target}.each do |ease|
+            ease.frames = 1
+            perform_ease_for(ease)
           end
         end
       end
@@ -258,12 +260,13 @@ end
 #==============================================================================
 # ** TDD Ease Object
 #------------------------------------------------------------------------------
-# Version:  1.0.4
-# Date:     11/09/2014
+# Version:  1.0.5
+# Date:     12/21/2014
 # Author:   Galenmereth / Tor Damian Design
 # 
 # Changelog
 # =========
+# 1.0.5 - Made the :frames attribute an accessor for read and write
 # 1.0.4 - Added support for non-Hash target objects. Fully backwards compatible
 # 1.0.3 - Added delay access method
 # 1.0.2 - :from now works as intended. Fixed attribute origin setting to remove
@@ -287,11 +290,11 @@ module TDD
   class Ease_Object
     attr_reader   :method
     attr_reader   :target
-    attr_reader   :frames
     attr_reader   :attributes
     attr_reader   :attributes_origin
     attr_reader   :setup_complete
 
+    attr_accessor :frames
     attr_accessor :frame
     attr_accessor :overwrite
     
