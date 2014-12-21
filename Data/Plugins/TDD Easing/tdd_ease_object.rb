@@ -1,12 +1,13 @@
 #==============================================================================
 # ** TDD Ease Object
 #------------------------------------------------------------------------------
-# Version:  1.0.4
-# Date:     11/09/2014
+# Version:  1.0.5
+# Date:     12/21/2014
 # Author:   Galenmereth / Tor Damian Design
 # 
 # Changelog
 # =========
+# 1.0.5 - Made the :frames attribute an accessor for read and write
 # 1.0.4 - Added support for non-Hash target objects. Fully backwards compatible
 # 1.0.3 - Added delay access method
 # 1.0.2 - :from now works as intended. Fixed attribute origin setting to remove
@@ -30,11 +31,11 @@ module TDD
   class Ease_Object
     attr_reader   :method
     attr_reader   :target
-    attr_reader   :frames
     attr_reader   :attributes
     attr_reader   :attributes_origin
     attr_reader   :setup_complete
 
+    attr_accessor :frames
     attr_accessor :frame
     attr_accessor :overwrite
     
