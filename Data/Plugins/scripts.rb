@@ -5,8 +5,8 @@ module TDD
   #           Easing methods can be extended through adding static methods to the Easing module. The default easing method
   #           is Easing::LINEAR and is identical to the default easing provided in VXAce
   #
-  # Version:: 1.0.8
-  # Date::    12/21/2014
+  # Version:: 1.0.9
+  # Date::    03/24/2015
   # Author::  Galenmereth / Tor Damian Design <post@tordamian.com>
   #
   # License:: Free for non-commercial and commercial use. Credit greatly appreciated but not required.
@@ -14,6 +14,7 @@ module TDD
   #           the script completely. Thank you.
   #
   #== Changelog
+  # 1.0.9::  * Updated Game_CharacterBase extension to 1.0.4, fixing ease_moveto_char problems when using event ids
   # 1.0.8::  * Added {complete_easings_for} with options.
   #          * Fixed overwrite bug, so that it checks for pointer uniqueness when comparing two
   #            easing targets.
@@ -852,8 +853,8 @@ end
 #==============================================================================
 # ** Game_CharacterBase EXTENSION
 #------------------------------------------------------------------------------
-# Version:  1.0.3
-# Date:     07/31/2014
+# Version:  1.0.4
+# Date:     03/24/2015
 # Author:   Galenmereth / Tor Damian Design
 #
 # Extended for: TDD Easing Script
@@ -903,7 +904,7 @@ class Game_CharacterBase
     else
       char = $game_map.events[char_id]
     end
-    
+
     if char
       ease_moveto(char.x, char.y, frames, easing)
     else

@@ -1,8 +1,8 @@
 #==============================================================================
 # ** Game_CharacterBase EXTENSION
 #------------------------------------------------------------------------------
-# Version:  1.0.3
-# Date:     07/31/2014
+# Version:  1.0.4
+# Date:     03/24/2015
 # Author:   Galenmereth / Tor Damian Design
 #
 # Extended for: TDD Easing Script
@@ -52,7 +52,7 @@ class Game_CharacterBase
     else
       char = $game_map.events[char_id]
     end
-    
+
     if char
       ease_moveto(char.x, char.y, frames, easing)
     else

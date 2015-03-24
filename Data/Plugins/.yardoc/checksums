@@ -1,5 +1,5 @@
 TDD Easing/bootstrap.rb d4e7d333dc1a71b81fabca188eee71d72a16a596
-TDD Easing/tdd_ease_module.rb 8b7afcfc55cc171595979c69769400c0fef580a1
+TDD Easing/tdd_ease_module.rb b9771075a05962b8e5f977733af269ad7337a72d
 TDD Easing/tdd_ease_object.rb 47e5fff6e8d2c51162d69afeb50110a406318f07
 TDD Easing/easing_addons/quad.rb 72ab1c18d7ef36fb1d9c4d834ca4c11b2f2ca7c6
 TDD Easing/easing_addons/back.rb df5815000575e96d7d4c57a226e978603f205c23
@@ -11,4 +11,4 @@ TDD Easing/easing_addons/elastic.rb 6ac276617bee69a10af23302d1f4b608f5989180
 TDD Easing/easing_addons/circular.rb a1cda564fb2de754ae00f5cf4a24da7d9133c180
 TDD Easing/engine_extensions/Scene_Base.rb d77d5e8cea37a1c4498a039a64b8861fdc4d49b4
 TDD Easing/engine_extensions/Game_Picture.rb cc5e8eccb5cd72d5ca10d799723875fbfaedc972
-TDD Easing/engine_extensions/Game_CharacterBase.rb 4d792da36e6449b952dce49d821ab532298103fc
+TDD Easing/engine_extensions/Game_CharacterBase.rb c25d08de54cda7552b82560933c3494b8655e2da

@@ -111,10 +111,10 @@ module. The default easing method is Easing::LINEAR and is identical to the
 default easing provided in VXAce</p>
 </dd><dt>Version
 <dd>
-<p>1.0.8</p>
+<p>1.0.9</p>
 </dd><dt>Date
 <dd>
-<p>12/21/2014</p>
+<p>03/24/2015</p>
 </dd><dt>Author
 <dd>
 <p>Galenmereth / Tor Damian Design &lt;post@tordamian.com&gt;</p>
@@ -126,7 +126,12 @@ description area unless you change the script completely. Thank you.</p>
 </dd></dl>
 
 <h2 id="label-Changelog">Changelog</h2>
-<dl class="rdoc-list note-list"><dt>1.0.8
+<dl class="rdoc-list note-list"><dt>1.0.9
+<dd><ul><li>
+<p>Updated Game_CharacterBase extension to 1.0.4, fixing ease_moveto_char
+problems when using event ids</p>
+</li></ul>
+</dd><dt>1.0.8
 <dd><ul><li>
 <p>Added <span class='object_link'><a href="#complete_easings_for-class_method" title="TDD::Ease.complete_easings_for (method)">Ease.complete_easings_for</a></span> with options.</p>
 </li><li>
@@ -490,7 +495,6 @@ target&#39;s current attribute values.</p>
       <pre class="lines">
 
 
-229
 230
 231
 232
@@ -502,10 +506,11 @@ target&#39;s current attribute values.</p>
 238
 239
 240
-241</pre>
+241
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_easings_for'>clear_easings_for</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -591,7 +596,6 @@ complete easings for.</p>
       <pre class="lines">
 
 
-247
 248
 249
 250
@@ -600,10 +604,11 @@ complete easings for.</p>
 253
 254
 255
-256</pre>
+256
+257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 247</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 248</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_complete_easings_for'>complete_easings_for</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_perform_complete_call'>perform_complete_call</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Array</span>
@@ -756,12 +761,12 @@ on the target object</p>
       <pre class="lines">
 
 
-108
 109
-110</pre>
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_frames'>frames</span><span class='comma'>,</span> <span class='id identifier rubyid_attributes'>attributes</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_register_ease'>register_ease</span><span class='lparen'>(</span><span class='symbol'>:from</span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_frames'>frames</span><span class='comma'>,</span> <span class='id identifier rubyid_attributes'>attributes</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -825,7 +830,6 @@ on the target object</p>
       <pre class="lines">
 
 
-212
 213
 214
 215
@@ -835,10 +839,11 @@ on the target object</p>
 219
 220
 221
-222</pre>
+222
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_overwrite_other_easings'>overwrite_other_easings</span><span class='lparen'>(</span><span class='id identifier rubyid_ease'>ease</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_ease'>ease</span><span class='period'>.</span><span class='id identifier rubyid_overwrite'>overwrite</span>
@@ -902,7 +907,6 @@ on the target object</p>
       <pre class="lines">
 
 
-135
 136
 137
 138
@@ -948,10 +952,11 @@ on the target object</p>
 178
 179
 180
-181</pre>
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 136</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_perform_ease_for'>perform_ease_for</span><span class='lparen'>(</span><span class='id identifier rubyid_ease'>ease</span><span class='rparen'>)</span>
   <span class='comment'># Initial setup of origin attributes
@@ -1136,7 +1141,6 @@ on the target object</p>
       <pre class="lines">
 
 
-188
 189
 190
 191
@@ -1153,10 +1157,11 @@ on the target object</p>
 202
 203
 204
-205</pre>
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 189</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_register_ease'>register_ease</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_frames'>frames</span><span class='comma'>,</span> <span class='id identifier rubyid_attributes'>attributes</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Array</span>
@@ -1442,12 +1447,12 @@ on the target object</p>
       <pre class="lines">
 
 
-96
 97
-98</pre>
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to'>to</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_frames'>frames</span><span class='comma'>,</span> <span class='id identifier rubyid_attributes'>attributes</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_register_ease'>register_ease</span><span class='lparen'>(</span><span class='symbol'>:to</span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_frames'>frames</span><span class='comma'>,</span> <span class='id identifier rubyid_attributes'>attributes</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1491,7 +1496,6 @@ on the target object</p>
       <pre class="lines">
 
 
-116
 117
 118
 119
@@ -1505,10 +1509,11 @@ on the target object</p>
 127
 128
 129
-130</pre>
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'TDD Easing/tdd_ease_module.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='cvar'>@@easings</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ease'>ease</span><span class='op'>|</span>
@@ -1535,7 +1540,7 @@ on the target object</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Dec 21 19:53:26 2014 by
+  Generated on Tue Mar 24 11:28:01 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.5).
 </div>
