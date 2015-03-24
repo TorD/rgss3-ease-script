@@ -29,7 +29,6 @@ raise "You need the TDD Easing Script to use this extension!" unless  $imported[
 $imported["TDD Easing Core<-Game_CharacterBase"] = true
 
 class Game_CharacterBase
-  @@interpreter = Game_Interpreter.new
   @easing = false
   #--------------------------------------------------------------------------
   # * NEW Move Character To Other Character
@@ -45,9 +44,20 @@ class Game_CharacterBase
   # - easing (:symbol or "string")
   #     The easing method to apply. Default is :linear
   #--------------------------------------------------------------------------
-  def ease_moveto_char(char, frames, easing = :linear)
-    char = @@interpreter.get_character(char)
-    ease_moveto(char.x, char.y, frames, easing)
+  def ease_moveto_char(char_id, frames, easing = :linear)
+    if char_id == -1
+      char = $game_player
+    elsif char_id == 0
+      char = self
+    else
+      char = $game_map.events[char_id]
+    end
+    
+    if char
+      ease_moveto(char.x, char.y, frames, easing)
+    else
+      raise "No event with ID #{char_id} found"
+    end
   end
 
   #--------------------------------------------------------------------------
