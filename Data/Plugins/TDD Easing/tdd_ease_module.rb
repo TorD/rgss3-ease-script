@@ -5,8 +5,8 @@ module TDD
   #           Easing methods can be extended through adding static methods to the Easing module. The default easing method
   #           is Easing::LINEAR and is identical to the default easing provided in VXAce
   #
-  # Version:: 1.0.10
-  # Date::    03/29/2015
+  # Version:: 1.0.9
+  # Date::    03/24/2015
   # Author::  Galenmereth / Tor Damian Design <post@tordamian.com>
   #
   # License:: Free for non-commercial and commercial use. Credit greatly appreciated but not required.
@@ -14,7 +14,6 @@ module TDD
   #           the script completely. Thank you.
   #
   #== Changelog
-  # 1.0.10:: * Fixed a bug in overwrite_other_easings and register_ease that caused overwrite to not work as advertised.
   # 1.0.9::  * Updated Game_CharacterBase extension to 1.0.4, fixing ease_moveto_char problems when using event ids
   # 1.0.8::  * Added {complete_easings_for} with options.
   #          * Fixed overwrite bug, so that it checks for pointer uniqueness when comparing two
@@ -121,14 +120,10 @@ module TDD
           if ease.delay > 0
             ease.delay -= 1
             next
-          elsif ease.overwrite
-            # Delete other easings for same target if applicable
-            puts "Attempting overwrite for #{ease}"
-            overwrite_other_easings(ease)
           end
           
           # Delete other easings if overwrite set
-          # self.overwrite_other_easings(ease) if ease.overwrite
+          self.overwrite_other_easings(ease) if ease.overwrite
 
           # Perform ease calculations
           perform_ease_for(ease)
@@ -173,20 +168,12 @@ module TDD
             end
           end
 
-          if ease.observers
-            ease.observers.each{|o| o.send(ease.call_on_update, ease)} if ease.call_on_update
-          else
-            ease.call_on_update.call(ease) if ease.call_on_update
-          end
+          ease.observers.each{|o| o.send(ease.call_on_update, ease)} if ease.call_on_update
 
           ease.frame += 1
           if ease.frame > ease.frames
             @@easings.delete(ease)
-            if ease.observers
-              ease.observers.each{|o| o.send(ease.call_on_complete, ease)} if ease.call_on_complete
-            else
-              ease.call_on_complete.call(ease) if ease.call_on_complete
-            end
+            ease.observers.each{|o| o.send(ease.call_on_complete, ease)} if ease.call_on_complete
           end
         rescue
           # Do not attempt to animate disposed items
@@ -207,14 +194,11 @@ module TDD
         
         ease = TDD::Ease_Object.new(method, target, frames, attributes, options)
         
-        # Perform actions immediately if no delay
-        if ease.delay == 0
-          # Delete other easings for same target if applicable
-          overwrite_other_easings(ease) if ease.overwrite
+        # Perform initial ease this frame if no delay
+        perform_ease_for(ease) if ease.delay == 0 && method == :from
 
-          # Perform initial ease this frame if no delay
-          perform_ease_for(ease) if method == :from
-        end
+        # Delete other easings for same target if applicable
+        self.overwrite_other_easings(ease) if ease.overwrite && ease.delay == 0
 
         # Add to easings array
         @@easings.push(ease)
@@ -233,9 +217,8 @@ module TDD
         ease.overwrite = false
 
         # Remove other ease with same target
-        @@easings.reject{|e| e === ease}.each do |ease_to_delete|
-          @@easings.delete(ease_to_delete) if ease_to_delete.target === ease.target
-          puts "Overwrote ease for #{ease_to_delete}" if ease_to_delete.target === ease.target
+        @@easings.each do |ease_to_delete|
+          @@easings.delete(ease_to_delete) if ease_to_delete.target.equal?(ease.target) && ease_to_delete != ease
         end
       end
 
@@ -251,7 +234,7 @@ module TDD
         }.merge(args)
 
         @@easings.each do |ease|
-          @@easings.delete(ease) if ease.target === args[:target]
+          @@easings.delete(ease) if ease.target.equal?(args[:target])
           if args[:perform_complete_call]
             ease.observers.each{|o| o.send(ease.call_on_complete, ease)} if ease.call_on_complete
           end
