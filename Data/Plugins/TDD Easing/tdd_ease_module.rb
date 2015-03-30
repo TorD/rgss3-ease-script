@@ -1,41 +1,61 @@
+#==============================================================================
+#
+# TDD Ease Script -- Animation framework
+# _____________________________________________________________________________
+#
+# + Author:   Galenmereth / Tor Damian Design
+# + E-mail:   post@tordamian.com
+# -----------------------------------------------------------------------------
+# + Version:  10.0.11
+# + Date:     03/30/2015
+# -----------------------------------------------------------------------------
+# + License:  Free for non-commercial and commercial use. Credit greatly
+#             appreciated but not required. Share script freely with everyone,
+#             but please retain this description and license. Thank you.
+# _____________________________________________________________________________
+#
+# + Changelog:
+#
+# 1.0.11  Implemented :same functionality for overwriting other eases, only 
+#         overwriting same attributes
+#
+# 1.0.10  Fixed a bug in overwrite_other_easings and register_ease that caused 
+#         overwrite to not work as advertised.
+#
+# 1.0.9   Updated Game_CharacterBase extension to 1.0.4, fixing ease_moveto_char
+#         problems when using event ids
+#
+# 1.0.8   Added {complete_easings_for} with options.
+#         Fixed overwrite bug, so that it checks for pointer uniqueness when
+#         comparing two easing targets.
+#
+# 1.0.7   Added :overwrite option for {to}, {from} and {register_ease} called
+#         :overwrite, which will overwrite any other easings for the given
+#         target(s). Added new public method: {clear_easings_for}. See its
+#         documentation
+#         Moved the performing of an ease frame animation into separate method:
+#         {perform_ease_for}.
+#
+# 1.0.6   Added support to use non-Hash objects directly as targets of easing. 
+#         This is fully backwards compatible. Also added documentation for the
+#         delay option.
+#
+# 1.0.5   Added support for a delay in options hash.
+#         This makes the easing wait the specified x amount of frames before
+#         starting.
+#
+# 1.0.4   TDD Ease Object updated. {from} now works as intended. 
+#         Fixed attribute origin setting to remove method check, since that is
+#         done in the easing module already.
+#
+# 1.0.3   Fixed @interpreter bug in Game_CharacterBase extension
+#
+# 1.0.2   Introduced the TDD module namespace and Ease_Object instead of using
+#         a hash
+#==============================================================================
 $imported = {} if $imported.nil?
 $imported["TDD Easing Core"] = true
 module TDD
-  # Summary:: This static class is used to apply an easing algorithm to an object's parameters over X amount of frames.  
-  #           Easing methods can be extended through adding static methods to the Easing module. The default easing method
-  #           is Easing::LINEAR and is identical to the default easing provided in VXAce
-  #
-  # Version:: 1.0.10
-  # Date::    03/29/2015
-  # Author::  Galenmereth / Tor Damian Design <post@tordamian.com>
-  #
-  # License:: Free for non-commercial and commercial use. Credit greatly appreciated but not required.
-  #           Share script freely with everyone, but please retain this description area unless you change
-  #           the script completely. Thank you.
-  #
-  #== Changelog
-  # 1.0.10:: * Fixed a bug in overwrite_other_easings and register_ease that caused overwrite to not work as advertised.
-  # 1.0.9::  * Updated Game_CharacterBase extension to 1.0.4, fixing ease_moveto_char problems when using event ids
-  # 1.0.8::  * Added {complete_easings_for} with options.
-  #          * Fixed overwrite bug, so that it checks for pointer uniqueness when comparing two
-  #            easing targets.
-  # 1.0.7::  * Added :overwrite option for {to}, {from} and {register_ease} called :overwrite, 
-  #            which will overwrite any other easings for the given target(s).
-  #          * Added new public method: {clear_easings_for}. See its documentation
-  #          * Moved the performing of an ease frame animation into separate method: {perform_ease_for}.
-  #
-  # 1.0.6:: Added support to use non-Hash objects directly as targets of easing. 
-  #         This is fully backwards compatible. Also added documentation for the delay option.
-  #
-  # 1.0.5:: Added support for a delay in options hash.
-  #         This makes the easing wait the specified x amount of frames before starting.
-  #
-  # 1.0.4:: TDD Ease Object updated. {from} now works as intended. 
-  #         Fixed attribute origin setting to remove method check, since that is done in the easing module already.
-  #
-  # 1.0.3:: Fixed @interpreter bug in Game_CharacterBase extension
-  #
-  # 1.0.2:: Introduced the TDD module namespace and Ease_Object instead of using a hash
   class Ease
     class << self
       @@easings=[]
@@ -60,6 +80,9 @@ module TDD
       #   Easing method to use
       # @option options [Integer] :delay (0)
       #   Delay (in frames) before starting the ease.
+      # @option ooptions [Boolean, Symbol] :overwrite (false)
+      #   If ease should overwrite other eases on same target. If true, deletes other eases on target
+      #   If :same, deletes only overlapping same attributes on target
       # @option options [Array] :observers (nil)
       #   Array of observer objects (default = nil)
       # @option options [Symbol, String, Boolean] :call_on_update (false)
@@ -123,12 +146,8 @@ module TDD
             next
           elsif ease.overwrite
             # Delete other easings for same target if applicable
-            puts "Attempting overwrite for #{ease}"
             overwrite_other_easings(ease)
           end
-          
-          # Delete other easings if overwrite set
-          # self.overwrite_other_easings(ease) if ease.overwrite
 
           # Perform ease calculations
           perform_ease_for(ease)
@@ -218,25 +237,30 @@ module TDD
 
         # Add to easings array
         @@easings.push(ease)
-
       end
 
       # Overwrite other ease queues for Ease_Objects with the same target
       # 
       # @param (Ease_Object) ease   The Ease_Object to search for like targets
       #
-      # @note Overwrites (deletes) other Ease_Objects with the same target
+      # @note Overwrites overlapping attributes or deletes other Ease_Objects with the same target, depending on ease.overwrite value
       def overwrite_other_easings(ease)
         return unless ease.overwrite
 
+        # Remove other ease with same target
+        @@easings.reject{|e| e === ease}.each do |ease_to_overwrite|
+          next unless ease_to_overwrite.target === ease.target
+
+          # If overwrite method is set to :same, will only overwrite overlapping attributes
+          if ease.overwrite.is_a?(Symbol) && ease.overwrite == :same
+            ease_to_overwrite.attributes.delete_if{|k,v| ease.attributes.has_key?(k)}
+          else
+            @@easings.delete(ease_to_delete) if ease_to_delete.target === ease.target
+          end
+        end
+
         # Turn off overwrite from now for this ease
         ease.overwrite = false
-
-        # Remove other ease with same target
-        @@easings.reject{|e| e === ease}.each do |ease_to_delete|
-          @@easings.delete(ease_to_delete) if ease_to_delete.target === ease.target
-          puts "Overwrote ease for #{ease_to_delete}" if ease_to_delete.target === ease.target
-        end
       end
 
       # Clear all active easings for a target object
